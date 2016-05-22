@@ -3,6 +3,7 @@ defmodule LunaTube.UserSocket do
 
   ## Channels
   channel "messages:*", LunaTube.MessagesChannel
+  channel "players:*", LunaTube.PlayersChannel
 
   ## Transports
   transport :websocket, Phoenix.Transports.WebSocket

@@ -1,4 +1,4 @@
-import { configureChannel } from './channel';
+import { configureMessageChannel } from './pheonixChannels';
 
 let channel = null;
 
@@ -43,7 +43,7 @@ export function sendMessage(message) {
 }
 
 export function subscribeMessage() {
-  channel = configureChannel();
+  channel = configureMessageChannel();
 
   return dispatch => {
     if (! channel) {

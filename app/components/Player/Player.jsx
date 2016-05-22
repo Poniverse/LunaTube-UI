@@ -34,6 +34,20 @@ class Video extends Component {
     this.hideControls = _.debounce(::this.hideControls, 3000);
   }
 
+  componentWillReceiveProps(nextProps) {
+    const { state } = this.state;
+
+    if (state !== PLAYER_STATE_LOADING) {
+      if (state !== PLAYER_STATE_PLAYING && nextProps.isPlaying) {
+        this.handlePlay();
+      }
+
+      if (state !== PLAYER_STATE_PAUSED && !nextProps.isPlaying) {
+        this.handlePause();
+      }
+    }
+  }
+
   componentDidMount() {
     if (document) {
       document.addEventListener('fullscreenchange', ::this.handleFullscreenEvent);
@@ -65,6 +79,10 @@ class Video extends Component {
       currentTimeTimer,
       progressBarTimer
     });
+
+    if (this.props.onPlay) {
+      this.props.onPlay();
+    }
   }
 
   handlePause() {
@@ -78,6 +96,10 @@ class Video extends Component {
       currentTimeTimer: 0,
       progressBarTimer: 0
     });
+
+    if (this.props.onPause) {
+      this.props.onPause();
+    }
   }
 
   handleOnMouseMove() {
