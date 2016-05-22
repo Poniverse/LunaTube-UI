@@ -13,34 +13,6 @@ export const PLAYER_STATE_LOADING='loading';
 export const PLAYER_STATE_PAUSED='paused';
 export const PLAYER_STATE_PLAYING='playing';
 
-const fullscreenApis = {
-  native: 'requestFullScreen',
-  moz: 'mozRequestFullScreen',
-  webkit: 'webkitRequestFullscreen',
-  ms: 'msRequestFullscreen'
-};
-
-const exitFullscreenApis = {
-  native: 'exitFullscreen',
-  moz: 'mozCancelFullScreen',
-  webkit: 'webkitExitFullscreen',
-  ms: 'msExitFullscreen'
-};
-
-const fullscreenEvents = {
-  native: 'fullscreenchange',
-  moz: 'mozfullscreenchange',
-  webkit: 'webkitfullscreenchange',
-  ms: 'MSFullscreenChange'
-};
-
-const fullscreenElements = {
-  native: 'fullscreenElement',
-  moz: 'mozFullScreenElement',
-  webkit: 'webkitFullscreenElement',
-  ms: 'msFullscreenElement'
-};
-
 class Video extends Component {
   constructor() {
     super();
@@ -60,14 +32,7 @@ class Video extends Component {
 
   componentDidMount() {
     if (document) {
-      _.forIn(fullscreenApis, (value, key) => {
-        if (document.body[value]) {
-          this.currentImplementation = key;
-          return false; // break
-        }
-      });
-
-      document.addEventListener(fullscreenEvents[this.currentImplementation], ::this.handleFullscreenEvent);
+      document.addEventListener('fullscreenchange', ::this.handleFullscreenEvent);
     }
 
     this.hideControls();
@@ -75,13 +40,13 @@ class Video extends Component {
 
   componentWillUnmount() {
     if (document) {
-      document.removeEventListener(fullscreenEvents[this.currentImplementation], ::this.handleFullscreenEvent);
+      document.removeEventListener('fullscreenchange', ::this.handleFullscreenEvent);
     }
   }
 
   handleFullscreenEvent() {
     this.setState({
-      fullscreen: null !== document[fullscreenElements[this.currentImplementation]]
+      fullscreen: null !== document.fullscreenElement
     });
   }
 
@@ -211,10 +176,10 @@ class Video extends Component {
     if (!this.state.fullscreen) {
       // Full Screen
       const currentNode = ReactDOM.findDOMNode(this);
-      currentNode[fullscreenApis[this.currentImplementation]]();
+      currentNode.requestFullscreen();
     } else {
       // Exit Full Screen
-      document[exitFullscreenApis[this.currentImplementation]]();
+      document.exitFullscreen();
     }
   }
 

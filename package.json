@@ -74,6 +74,7 @@
     "extract-text-webpack-plugin": "^1.0.1",
     "file-loader": "^0.8.5",
     "font-awesome": "^4.5.0",
+    "fullscreen-api-polyfill": "^1.1.2",
     "inline-environment-variables-webpack-plugin": "0.0.2",
     "intl": "^1.1.0",
     "invariant": "^2.2.1",

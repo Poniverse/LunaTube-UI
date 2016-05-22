@@ -1,4 +1,5 @@
 import 'intl';
+import 'fullscreen-api-polyfill';
 
 import React from 'react';
 import { render } from 'react-dom';

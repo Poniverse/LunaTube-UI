@@ -2499,6 +2499,11 @@
       "from": "fstream@>=1.0.0 <2.0.0",
       "resolved": "https://npm.socratesdev.co.uk/fstream/-/fstream-1.0.9.tgz"
     },
+    "fullscreen-api-polyfill": {
+      "version": "1.1.2",
+      "from": "fullscreen-api-polyfill@latest",
+      "resolved": "https://npm.socratesdev.co.uk/fullscreen-api-polyfill/-/fullscreen-api-polyfill-1.1.2.tgz"
+    },
     "function-bind": {
       "version": "1.1.0",
       "from": "function-bind@>=1.0.2 <2.0.0",
