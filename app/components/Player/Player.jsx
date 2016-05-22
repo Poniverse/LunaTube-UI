@@ -1,14 +1,45 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 import ReactTimeout from 'react-timeout';
 import NativePlayer from './NativePlayer';
 import YoutubePlayer from './YoutubePlayer';
+import _ from 'lodash';
 import './Player.scss';
 
 export const PLAYER_SOURCE_NATIVE='native';
 export const PLAYER_SOURCE_YOUTUBE='youtube';
+
 export const PLAYER_STATE_LOADING='loading';
 export const PLAYER_STATE_PAUSED='paused';
 export const PLAYER_STATE_PLAYING='playing';
+
+const fullscreenApis = {
+  native: 'requestFullScreen',
+  moz: 'mozRequestFullScreen',
+  webkit: 'webkitRequestFullscreen',
+  ms: 'msRequestFullscreen'
+};
+
+const exitFullscreenApis = {
+  native: 'exitFullscreen',
+  moz: 'mozCancelFullScreen',
+  webkit: 'webkitExitFullscreen',
+  ms: 'msExitFullscreen'
+};
+
+const fullscreenEvents = {
+  native: 'fullscreenchange',
+  moz: 'mozfullscreenchange',
+  webkit: 'webkitfullscreenchange',
+  ms: 'MSFullscreenChange'
+};
+
+const fullscreenElements = {
+  native: 'fullscreenElement',
+  moz: 'mozFullScreenElement',
+  webkit: 'webkitFullscreenElement',
+  ms: 'msFullscreenElement'
+};
 
 class Video extends Component {
   constructor() {
@@ -19,8 +50,34 @@ class Video extends Component {
       current: 0,
       duration: 0,
       progress: 0.00,
-      progressTimer: 0
+      progressTimer: 0,
+      fullscreen: false
+    };
+  }
+
+  componentDidMount() {
+    if (document) {
+      _.forIn(fullscreenApis, (value, key) => {
+        if (document.body[value]) {
+          this.currentImplementation = key;
+          return false; // break
+        }
+      });
+
+      document.addEventListener(fullscreenEvents[this.currentImplementation], ::this.handleFullscreenEvent);
     }
+  }
+
+  componentWillUnmount() {
+    if (document) {
+      document.removeEventListener(fullscreenEvents[this.currentImplementation], ::this.handleFullscreenEvent);
+    }
+  }
+
+  handleFullscreenEvent() {
+    this.setState({
+      fullscreen: null !== document[fullscreenElements[this.currentImplementation]]
+    });
   }
 
   handlePlay() {
@@ -58,7 +115,7 @@ class Video extends Component {
 
     this.setState({
       duration: time,
-      state: PLAYER_STATE_PAUSED,
+      state: PLAYER_STATE_PAUSED
     });
 
   }
@@ -93,8 +150,6 @@ class Video extends Component {
 
     classes.push(source);
 
-    console.log(this.state.progress);
-
     return (
       <div
         className="player-container"
@@ -121,11 +176,25 @@ class Video extends Component {
             <i className="fa fa-info-circle" />
           </button>
           <span>
-            {this.state.current.toFixed(0)} / {this.state.duration.toFixed(0)} | {this.state.progress.toFixed(0)}%
+            {Math.floor(this.state.current)} / {Math.floor(this.state.duration)} | {Math.floor(this.state.progress)}%
           </span>
+          <button onClick={::this.toggleFullScreen}>
+            <i className={this.state.fullscreen ? "fa fa-compress" : "fa fa-expand"} />
+          </button>
         </div>
       </div>
     )
+  }
+
+  toggleFullScreen() {
+    if (!this.state.fullscreen) {
+      // Full Screen
+      const currentNode = ReactDOM.findDOMNode(this);
+      currentNode[fullscreenApis[this.currentImplementation]]();
+    } else {
+      // Exit Full Screen
+      document[exitFullscreenApis[this.currentImplementation]]();
+    }
   }
 
   renderPlayButton() {
