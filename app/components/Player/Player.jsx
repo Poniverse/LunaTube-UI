@@ -24,14 +24,14 @@ class Video extends Component {
       current: 0,
       duration: 0,
       progress: 0.00,
-      progressTimer: 0,
+      currentTimeTimer: 0,
+      progressBarTimer: 0,
       fullscreen: false,
       showControls: true,
       slider: 0
     };
 
     this.hideControls = _.debounce(::this.hideControls, 3000);
-    this.updateCurrentTime = _.throttle(::this.updateCurrentTime, 1000);
   }
 
   componentDidMount() {
@@ -55,24 +55,28 @@ class Video extends Component {
   }
 
   handlePlay() {
-    const intervalId = this.props.setInterval(::this.updateCurrentTime, 200);
+    const currentTimeTimer = this.props.setInterval(::this.updateCurrentTime, 500);
+    const progressBarTimer = this.props.setInterval(::this.updateProgressBar, 100);
 
     this.refs.player.playVideo();
 
     this.setState({
       state: PLAYER_STATE_PLAYING,
-      progressTimer: intervalId
+      currentTimeTimer,
+      progressBarTimer
     });
   }
 
   handlePause() {
-    this.props.clearInterval(this.state.progressTimer);
+    this.props.clearInterval(this.state.currentTimeTimer);
+    this.props.clearInterval(this.state.progressBarTimer);
 
     this.refs.player.pauseVideo();
 
     this.setState({
       state: PLAYER_STATE_PAUSED,
-      progressTimer: 0
+      currentTimeTimer: 0,
+      progressBarTimer: 0
     });
   }
 
@@ -105,7 +109,14 @@ class Video extends Component {
   updateCurrentTime() {
     this.refs.player.getCurrentTime().then(time => {
       this.setState({
-        current: time,
+        current: time
+      });
+    });
+  }
+
+  updateProgressBar() {
+    this.refs.player.getCurrentTime().then(time => {
+      this.setState({
         progress: (time / this.state.duration) * 100
       });
     });
