@@ -1,9 +1,43 @@
 import React, { Component } from 'react';
 import Youtube from 'react-youtube';
+import AbstractPlayer from './AbstractPlayer';
 
-class YoutubePlayer extends Component {
+export const PLAYER_SOURCE_YOUTUBE = 'youtube';
+
+class YoutubePlayer extends AbstractPlayer {
   componentDidMount() {
     this.player = this.refs.youtubePlayer._internalPlayer;
+  }
+
+  playVideo() {
+    this.player.playVideo();
+    super.playVideo();
+  }
+
+  pauseVideo() {
+    this.player.pauseVideo();
+    super.pauseVideo();
+  }
+
+  getCurrentTime() {
+    return this.player.getCurrentTime();
+  }
+
+  getDuration() {
+    return this.player.getDuration();
+  }
+
+  handleOnReady(event) {
+    const { onReady } = this.props;
+
+    // access to player in all event handlers via event.target
+    event.target.pauseVideo();
+
+    this.getDuration().then(time => {
+      onReady(time);
+    });
+
+    super.handleOnReady(event);
   }
 
   render() {
@@ -28,33 +62,6 @@ class YoutubePlayer extends Component {
         onReady={::this.handleOnReady}
       />
     );
-  }
-
-  playVideo() {
-    this.player.playVideo();
-  }
-
-  pauseVideo() {
-    this.player.pauseVideo();
-  }
-
-    getCurrentTime() {
-    return this.player.getCurrentTime();
-  }
-
-  getDuration() {
-    return this.player.getDuration();
-  }
-
-  handleOnReady(event) {
-    const { onReady } = this.props;
-    
-    // access to player in all event handlers via event.target
-    event.target.pauseVideo();
-    
-    this.getDuration().then(time => {
-      onReady(time);
-    });
   }
 }
 

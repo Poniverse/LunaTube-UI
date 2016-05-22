@@ -1,37 +1,24 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import path from 'path';
+import AbstractPlayer from './AbstractPlayer';
 
-class NativePlayer extends Component {
-  render() {
-    const { url } = this.props;
-    const extension = path.extname(url).substr(1);
+export const PLAYER_SOURCE_NATIVE = 'native';
 
-    return (
-      <video
-        ref="video"
-      >
-        <source src={url} type={"video/"+ extension}/>
-      </video>
-    )
-  }
-
+class NativePlayer extends AbstractPlayer {
   componentDidMount() {
     this.video = ReactDOM.findDOMNode( this.refs.video );
-
-    // window.$video = $video;
-    this.video.addEventListener("loadedmetadata", ::this._metaDataLoaded );
-    // this update interval gap is too big make progressbar not snappy
-    // $video.addEventListener("timeupdate", this._timeupdate )
-    this.video.addEventListener("progress", ::this._updateProgress );
+    this.video.addEventListener("loadedmetadata", ::this.handleOnReady );
   }
 
   playVideo() {
     this.video.play();
+    super.playVideo();
   }
 
   pauseVideo() {
     this.video.pause();
+    super.pauseVideo();
   }
 
   getCurrentTime() {
@@ -46,18 +33,27 @@ class NativePlayer extends Component {
     });
   }
 
-  _updateProgress() {
-    console.log('==> Progress report...', arguments);
-  }
-
-  _metaDataLoaded() {
+  handleOnReady() {
     const { onReady } = this.props;
 
     this.getDuration().then(time => {
       onReady(time);
     });
 
-    console.log('==> Metadata Loaded...', arguments);
+    super.handleOnReady(event);
+  }
+
+  render() {
+    const { url } = this.props;
+    const extension = path.extname(url).substr(1);
+
+    return (
+      <video
+        ref="video"
+      >
+        <source src={url} type={"video/"+ extension}/>
+      </video>
+    )
   }
 }
 

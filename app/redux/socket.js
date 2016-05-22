@@ -1,3 +1,9 @@
 import { Socket } from 'phoenix';
 
-export default new Socket('ws://localhost:4000/socket');
+let socket;
+
+if (!__ISSERVER__) {
+  socket = new Socket('ws://localhost:4000/socket')
+}
+
+export default socket;

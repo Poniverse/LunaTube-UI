@@ -68,8 +68,6 @@ function clearTimer() {
 
 export function play(push = true) {
   return (dispatch, state) => {
-    console.log(state());
-
     if (push &&  state().channel.isLeader) {
       channel.push('sync:play', {})
         .receive('ok', response => {
@@ -86,9 +84,8 @@ export function play(push = true) {
   }
 }
 
-export function pause(push = true) {
+export function pause(push = false) {
   return (dispatch, state) => {
-
     if (push && state().channel.isLeader) {
       channel.push('sync:pause', {})
         .receive('ok', response => {
@@ -156,8 +153,8 @@ export function subscribeMessage() {
       return;
     }
 
-    channel.on('update:time', message => dispatch(updateTime(message.currentTime)));
-    channel.on('update:play', message => dispatch(play(false)));
-    channel.on('update:pause', message => dispatch(pause(false)));
+    // channel.on('update:time', message => dispatch(updateTime(message.currentTime)));
+    // channel.on('update:play', message => dispatch(play(false)));
+    // channel.on('update:pause', message => dispatch(pause(false)));
   };
 }

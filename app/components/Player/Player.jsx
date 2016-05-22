@@ -1,26 +1,19 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import ReactTimeout from 'react-timeout';
-import NativePlayer from './NativePlayer';
 import InputRange from 'react-input-range';
-import YoutubePlayer from './YoutubePlayer';
+import NativePlayer, { PLAYER_SOURCE_NATIVE } from './NativePlayer';
+import YoutubePlayer, { PLAYER_SOURCE_YOUTUBE } from './YoutubePlayer';
 import moment from 'moment';
 import _ from 'lodash';
 import './Player.scss';
-
-export const PLAYER_SOURCE_NATIVE='native';
-export const PLAYER_SOURCE_YOUTUBE='youtube';
-
-export const PLAYER_STATE_LOADING='loading';
-export const PLAYER_STATE_PAUSED='paused';
-export const PLAYER_STATE_PLAYING='playing';
+import { PLAYER_STATE_LOADING, PLAYER_STATE_PAUSED , PLAYER_STATE_PLAYING } from './AbstractPlayer'
 
 class Video extends Component {
   constructor() {
     super();
 
     this.state = {
-      state: PLAYER_STATE_LOADING,
       current: 0,
       duration: 0,
       progress: 0.00,
@@ -32,20 +25,6 @@ class Video extends Component {
     };
 
     this.hideControls = _.debounce(::this.hideControls, 3000);
-  }
-
-  componentWillReceiveProps(nextProps) {
-    const { state } = this.state;
-
-    if (state !== PLAYER_STATE_LOADING) {
-      if (state !== PLAYER_STATE_PLAYING && nextProps.isPlaying) {
-        this.handlePlay();
-      }
-
-      if (state !== PLAYER_STATE_PAUSED && !nextProps.isPlaying) {
-        this.handlePause();
-      }
-    }
   }
 
   componentDidMount() {
@@ -72,10 +51,7 @@ class Video extends Component {
     const currentTimeTimer = this.props.setInterval(::this.updateCurrentTime, 500);
     const progressBarTimer = this.props.setInterval(::this.updateProgressBar, 100);
 
-    this.refs.player.playVideo();
-
     this.setState({
-      state: PLAYER_STATE_PLAYING,
       currentTimeTimer,
       progressBarTimer
     });
@@ -89,10 +65,7 @@ class Video extends Component {
     this.props.clearInterval(this.state.currentTimeTimer);
     this.props.clearInterval(this.state.progressBarTimer);
 
-    this.refs.player.pauseVideo();
-
     this.setState({
-      state: PLAYER_STATE_PAUSED,
       currentTimeTimer: 0,
       progressBarTimer: 0
     });
@@ -125,7 +98,6 @@ class Video extends Component {
       duration: time,
       state: PLAYER_STATE_PAUSED
     });
-
   }
 
   updateCurrentTime() {
@@ -145,15 +117,21 @@ class Video extends Component {
   }
 
   getPlayer() {
-    const { source, url } = this.props;
+    const { source, url, state } = this.props;
+
+    const props = {
+      url,
+      state,
+      onReady: ::this.handlePlayerReady
+    };
 
     switch (source) {
       case PLAYER_SOURCE_NATIVE:
-        return this.renderNative(url);
+        return this.renderNative(props);
       case PLAYER_SOURCE_YOUTUBE:
-        return this.renderYoutube(url);
+        return this.renderYoutube(props);
       default:
-        return this.renderUnsupported(url);
+        return this.renderUnsupported(props);
     }
   }
 
@@ -161,23 +139,23 @@ class Video extends Component {
     const { source } = this.props;
     const video = this.getPlayer();
 
-    let classes = ['player'];
+    let containerClasses = ['player-container'];
+    let playerClasses = ['player'];
     let controlBarClasses = ['control-bar'];
 
-    classes.push(source);
+    playerClasses.push(source ? source : 'unsupported');
 
-    if (this.state.state === PLAYER_STATE_PLAYING && !this.state.showControls) {
+    if (this.props.state === PLAYER_STATE_PLAYING && !this.state.showControls) {
+      containerClasses.push('hide-mouse');
       controlBarClasses.push('hide-bar');
     }
 
     return (
       <div
-        className="player-container"
+        className={containerClasses.join(' ')}
         onMouseMove={::this.handleOnMouseMove}
-        // onMouseEnter={::this.handleOnMouseEnter}
-        // onMouseLeave={::this.handleOnMouseLeave}
       >
-        <div className={classes.join(' ')}>
+        <div className={playerClasses.join(' ')}>
           {video}
         </div>
         <div className={controlBarClasses.join(' ')}>
@@ -188,7 +166,15 @@ class Video extends Component {
           </div>
 
           <div className="left-controls">
-            { this.state.state !== PLAYER_STATE_PLAYING ? this.renderPlayButton() : this.renderPauseButton()  }
+            { this.props.state !== PLAYER_STATE_PLAYING ? (
+              <button className="play" onClick={::this.handlePlay}>
+                <i className="fa fa-play" />
+              </button>
+            ) : (
+              <button className="pause" onClick={::this.handlePause}>
+                <i className="fa fa-pause" />
+              </button>
+            )  }
             <span>
               {Video.formatTime(this.state.current)} / {Video.formatTime(this.state.duration)}
             </span>
@@ -248,46 +234,29 @@ class Video extends Component {
     }
   }
 
-  renderPlayButton() {
-    return (
-      <button className="play" onClick={::this.handlePlay}>
-        <i className="fa fa-play" />
-      </button>
-    );
-  }
-
-  renderPauseButton() {
-    return (
-      <button className="pause" onClick={::this.handlePause}>
-        <i className="fa fa-pause" />
-      </button>
-    );
-  }
-
-  renderYoutube(url) {
+  renderYoutube(props) {
     return (
       <YoutubePlayer
         ref="player"
-        url={url}
-        onReady={::this.handlePlayerReady}
+        {...props}
       />
     );
   }
 
-  renderNative(url) {
+  renderNative(props) {
     return (
       <NativePlayer
         ref="player"
-        url={url}
-        onReady={::this.handlePlayerReady}
+        {...props}
       />
     );
   }
 
-  renderUnsupported(url) {
+  renderUnsupported(props) {
     return (
       <div>
         <h1>Unsupported Source</h1>
+        <p>Unfortunately the entered source is not supported by our system.</p>
       </div>
     );
   }
