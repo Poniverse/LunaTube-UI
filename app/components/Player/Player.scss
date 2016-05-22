@@ -1,29 +1,51 @@
 $green: #98D61E;
+$white: #FFFFFF;
 
 .player-container {
+  position: relative;
 
-  &.youtube {
-    position: relative;
-    padding-bottom: 56.25%; /* 16:9 */
-    padding-top: 25px;
-    height: 0;
+  .player {
+    &.native > video {
+      display: block;
+      width: 100% !important;
+      height: auto !important;
+    }
 
-    iframe {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+    &.youtube {
+      position: relative;
+      padding-bottom: 56.25%; /* 16:9 */
+      padding-top: 25px;
+      height: 0;
+
+      iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+      }
     }
   }
 
-  &.native > video {
-    width: 100% !important;
-    height: auto !important;
+  .control-bar {
+    position: absolute;
+    z-index: 2;
+    width: 100%;
+    height: 40px;
+    background: rgba($green, 0.8);
+    bottom: 0;
+    animation: all .5 linear;
+    color: $white;
+
+    &.hidden {
+      opacity: 0;
+    }
+
+    button {
+      outline: none;
+      border: 0;
+      padding: 11px 10px 9px;
+      background: none;
+    }
   }
-}
-
-
-.video-overlay {
-  background: $green;
 }

@@ -6,7 +6,9 @@ class Channel extends Component {
   render() {
     // Youtube:
     //  - 0elg9WVytMs (Doin it Right - Sim Gretina)
-    // MP4: http://www.w3schools.com/html/mov_bbb.mp4
+    // MP4:
+    //  - http://www.w3schools.com/html/mov_bbb.mp4
+    //  - http://www.sample-videos.com/video/mp4/720/big_buck_bunny_720p_50mb.mp4
 
     // 0elg9WVytMs
 
@@ -14,14 +16,14 @@ class Channel extends Component {
       <div className="container">
         <div className="col-xs-6">
           <Player
-            source={PLAYER_SOURCE_YOUTUBE}
-            url="0elg9WVytMs"
+            source={PLAYER_SOURCE_NATIVE}
+            url="http://www.w3schools.com/html/mov_bbb.mp4"
           />
         </div>
         <div className="col-xs-6">
           <Player
-            source={PLAYER_SOURCE_NATIVE}
-            url="http://www.w3schools.com/html/mov_bbb.mp4"
+            source={PLAYER_SOURCE_YOUTUBE}
+            url="0elg9WVytMs"
           />
         </div>
       </div>

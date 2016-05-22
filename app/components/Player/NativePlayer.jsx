@@ -10,7 +10,6 @@ class NativePlayer extends Component {
     return (
       <video
         ref="video"
-        autoPlay={true}
       >
         <source src={url} type={"video/"+ extension}/>
       </video>
@@ -20,13 +19,11 @@ class NativePlayer extends Component {
   componentDidMount() {
     this.video = ReactDOM.findDOMNode( this.refs.video );
 
-    console.log(this.video);
-
     // window.$video = $video;
-    this.video.addEventListener("loadedmetadata", this._metaDataLoaded );
-    // this update interval gap is too big make progressbar not snapy
+    this.video.addEventListener("loadedmetadata", ::this._metaDataLoaded );
+    // this update interval gap is too big make progressbar not snappy
     // $video.addEventListener("timeupdate", this._timeupdate )
-    this.video.addEventListener("progress", this._updateProgress );
+    this.video.addEventListener("progress", ::this._updateProgress );
   }
 
   playVideo() {
@@ -37,11 +34,29 @@ class NativePlayer extends Component {
     this.video.pause();
   }
 
+  getCurrentTime() {
+    return new Promise(resolve => {
+      resolve(this.video.played.end(0));
+    });
+  }
+
+  getDuration() {
+    return new Promise(resolve => {
+      resolve(this.video.seekable.end(0));
+    });
+  }
+
   _updateProgress() {
     console.log('==> Progress report...', arguments);
   }
 
   _metaDataLoaded() {
+    const { onReady } = this.props;
+
+    this.getDuration().then(time => {
+      onReady(time);
+    });
+
     console.log('==> Metadata Loaded...', arguments);
   }
 }

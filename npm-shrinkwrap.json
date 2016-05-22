@@ -4366,6 +4366,11 @@
         }
       }
     },
+    "react-timeout": {
+      "version": "1.0.0",
+      "from": "react-timeout@latest",
+      "resolved": "https://npm.socratesdev.co.uk/react-timeout/-/react-timeout-1.0.0.tgz"
+    },
     "react-transform-catch-errors": {
       "version": "1.0.2",
       "from": "react-transform-catch-errors@>=1.0.2 <2.0.0",
