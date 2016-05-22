@@ -51,8 +51,11 @@ class Video extends Component {
       duration: 0,
       progress: 0.00,
       progressTimer: 0,
-      fullscreen: false
+      fullscreen: false,
+      showControls: true
     };
+
+    this.hideControls = _.debounce(::this.hideControls, 3000);
   }
 
   componentDidMount() {
@@ -66,6 +69,8 @@ class Video extends Component {
 
       document.addEventListener(fullscreenEvents[this.currentImplementation], ::this.handleFullscreenEvent);
     }
+
+    this.hideControls();
   }
 
   componentWillUnmount() {
@@ -102,12 +107,20 @@ class Video extends Component {
     });
   }
 
-  handleOnMouseEnter() {
-    // console.log('==> Mouse entered player');
+  handleOnMouseMove() {
+    if (this.state.showControls !== true) {
+      this.setState({
+        showControls: true
+      });
+    }
+
+    this.hideControls();
   }
 
-  handleOnMouseLeave() {
-    // console.log('==> Mouse left player');
+  hideControls() {
+    this.setState({
+      showControls: false
+    });
   }
 
   handlePlayerReady(time) {
@@ -147,32 +160,27 @@ class Video extends Component {
     const video = this.getPlayer();
 
     let classes = ['player'];
+    let controlBarClasses = ['control-bar'];
 
     classes.push(source);
+
+    if (this.state.state === PLAYER_STATE_PLAYING && !this.state.showControls) {
+      controlBarClasses.push('hide-bar');
+    }
 
     return (
       <div
         className="player-container"
-        onMouseEnter={::this.handleOnMouseEnter}
-        onMouseLeave={::this.handleOnMouseLeave}
+        onMouseMove={::this.handleOnMouseMove}
+        // onMouseEnter={::this.handleOnMouseEnter}
+        // onMouseLeave={::this.handleOnMouseLeave}
       >
         <div className={classes.join(' ')}>
           {video}
         </div>
-        <div className="control-bar">
+        <div className={controlBarClasses.join(' ')}>
           { this.state.state !== PLAYER_STATE_PLAYING ? this.renderPlayButton() : this.renderPauseButton()  }
-          <button onClick={() => {
-            const currentTime = this.refs.player.getCurrentTime();
-            const duration = this.refs.player.getDuration();
-
-            duration.then(time => {
-              console.log('==> Duration', time);
-            });
-
-            currentTime.then(time => {
-              console.log('==> CurrentTime', time);
-            });
-          }}>
+          <button onClick={::this.logInfo}>
             <i className="fa fa-info-circle" />
           </button>
           <span>
@@ -184,6 +192,19 @@ class Video extends Component {
         </div>
       </div>
     )
+  }
+
+  logInfo() {
+    const currentTime = this.refs.player.getCurrentTime();
+    const duration = this.refs.player.getDuration();
+
+    duration.then(time => {
+      console.log('==> Duration', time);
+    });
+
+    currentTime.then(time => {
+      console.log('==> CurrentTime', time);
+    });
   }
 
   toggleFullScreen() {

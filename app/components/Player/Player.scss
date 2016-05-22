@@ -48,10 +48,11 @@ $black: #000000;
     height: 40px;
     background: rgba($green, 0.8);
     bottom: 0;
-    animation: all .5 linear;
+    transition: opacity .5s;
     color: $white;
+    opacity: 1;
 
-    &.hidden {
+    &.hide-bar {
       opacity: 0;
     }
 
