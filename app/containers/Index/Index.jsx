@@ -9,6 +9,8 @@ class Index extends Component {
         <ul>
           <li>
             <Link to="/messages">Messages</Link>
+          </li>
+          <li>
             <Link to="/channel">Video</Link>
           </li>
         </ul>
