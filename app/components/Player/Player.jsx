@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import ReactTimeout from 'react-timeout';
 import NativePlayer from './NativePlayer';
 import YoutubePlayer from './YoutubePlayer';
+import moment from 'moment';
 import _ from 'lodash';
 import './Player.scss';
 
@@ -149,14 +150,25 @@ class Video extends Component {
             <i className="fa fa-info-circle" />
           </button>
           <span>
-            {Math.floor(this.state.current)} / {Math.floor(this.state.duration)} | {Math.floor(this.state.progress)}%
+            {Video.formatTime(this.state.current)} / {Video.formatTime(this.state.duration)} | {Math.floor(this.state.progress)}%
           </span>
-          <button onClick={::this.toggleFullScreen}>
+          <button onClick={::this.toggleFullScreen} className="pull-right">
             <i className={this.state.fullscreen ? "fa fa-compress" : "fa fa-expand"} />
           </button>
         </div>
       </div>
     )
+  }
+
+  static formatTime(seconds) {
+    const timestamp = moment(new Date).startOf('day').add(Math.floor(seconds), 'seconds');
+    let format = 'mm:ss';
+
+    if (timestamp.hour() > 0) {
+      format = 'H:mm:ss';
+    }
+
+    return timestamp.format(format);
   }
 
   logInfo() {
