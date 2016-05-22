@@ -2,6 +2,12 @@ $green: #98D61E;
 $white: #FFFFFF;
 $black: #000000;
 
+$InputRange-primaryColor: $white;
+$InputRange-neutralLightColor: rgba($white, 0.4);
+
+@import "~react-input-range/scss/InputRange.scss";
+
+
 .player-container {
   position: relative;
   background: $black;
@@ -54,6 +60,34 @@ $black: #000000;
 
     &.hide-bar {
       opacity: 0;
+    }
+
+    $left-width: 130px;
+    $right-width: 32px;
+
+    .left-controls {
+      float: left;
+      width: $left-width;
+    }
+
+    .right-controls {
+      float: right;
+      width: 32px;
+    }
+
+    .slider {
+      $margin-left: $left-width + 5px;
+      $margin-right: $right-width + 5px;
+
+      color: white;
+      margin: 0 $margin-right 0 $margin-left;
+      padding: 15px 0;
+
+      .InputRange-label--min,
+      .InputRange-label--max,
+      .InputRange-label--value {
+        display: none;
+      }
     }
 
     button {

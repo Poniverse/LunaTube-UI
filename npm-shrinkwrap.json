@@ -4309,6 +4309,11 @@
         }
       }
     },
+    "react-input-range": {
+      "version": "0.8.0",
+      "from": "react-input-range@latest",
+      "resolved": "https://npm.socratesdev.co.uk/react-input-range/-/react-input-range-0.8.0.tgz"
+    },
     "react-intl": {
       "version": "2.1.2",
       "from": "react-intl@>=2.0.0 <3.0.0",

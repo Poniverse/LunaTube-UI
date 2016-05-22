@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import ReactTimeout from 'react-timeout';
 import NativePlayer from './NativePlayer';
+import InputRange from 'react-input-range';
 import YoutubePlayer from './YoutubePlayer';
 import moment from 'moment';
 import _ from 'lodash';
@@ -25,10 +26,12 @@ class Video extends Component {
       progress: 0.00,
       progressTimer: 0,
       fullscreen: false,
-      showControls: true
+      showControls: true,
+      slider: 0
     };
 
     this.hideControls = _.debounce(::this.hideControls, 3000);
+    this.updateCurrentTime = _.throttle(::this.updateCurrentTime, 1000);
   }
 
   componentDidMount() {
@@ -145,19 +148,36 @@ class Video extends Component {
           {video}
         </div>
         <div className={controlBarClasses.join(' ')}>
-          { this.state.state !== PLAYER_STATE_PLAYING ? this.renderPlayButton() : this.renderPauseButton()  }
-          <button onClick={::this.logInfo}>
-            <i className="fa fa-info-circle" />
-          </button>
-          <span>
-            {Video.formatTime(this.state.current)} / {Video.formatTime(this.state.duration)} | {Math.floor(this.state.progress)}%
-          </span>
-          <button onClick={::this.toggleFullScreen} className="pull-right">
-            <i className={this.state.fullscreen ? "fa fa-compress" : "fa fa-expand"} />
-          </button>
+          <div className="right-controls pull-right">
+            <button onClick={::this.toggleFullScreen}>
+              <i className={this.state.fullscreen ? "fa fa-compress" : "fa fa-expand"} />
+            </button>
+          </div>
+
+          <div className="left-controls">
+            { this.state.state !== PLAYER_STATE_PLAYING ? this.renderPlayButton() : this.renderPauseButton()  }
+            <span>
+              {Video.formatTime(this.state.current)} / {Video.formatTime(this.state.duration)}
+            </span>
+          </div>
+
+          <div className="slider">
+            <InputRange
+              maxValue={100}
+              minValue={0}
+              value={this.state.progress}
+              onChange={::this.handleSliderChange}
+            />
+          </div>
         </div>
       </div>
     )
+  }
+
+  handleSliderChange(component, values) {
+    // this.setState({
+    //   slider: values
+    // })
   }
 
   static formatTime(seconds) {
