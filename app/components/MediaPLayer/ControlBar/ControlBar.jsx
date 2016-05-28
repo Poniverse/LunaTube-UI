@@ -50,6 +50,7 @@ class ControlBar extends Component {
     } = this.props;
     const progress = (currentTime / duration) * 100;
     const classes = ['control-bar'];
+    const live = duration === Infinity;
 
     if (hidden) {
       classes.push('hide-bar');
@@ -78,11 +79,11 @@ class ControlBar extends Component {
             ) : null
           }
             <span>
-              {this.formatTime(currentTime > -1 ? currentTime : 0)} / {this.formatTime(duration)}
+              {this.formatTime(currentTime > -1 ? currentTime : 0)} / { duration !== Infinity ? this.formatTime(duration) : 'LIVE'}
             </span>
         </div>
 
-        { showSeekbar && !hideControls ? (
+        { !live && showSeekbar && !hideControls ? (
           <div className="seekbar">
             <div className="seekbar-progress" style={{width:progress+"%"}}></div>
             <input type="range" min="0.0" max="100" step="0.5"
