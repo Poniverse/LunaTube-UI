@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import ReactTimeout from 'react-timeout';
-import NativePlayer, { PLAYER_SOURCE_NATIVE } from './Players/NativePlayer';
+import NativeVideoPlayer, { PLAYER_SOURCE_NATIVE_VIDEO } from './Players/NativeVideoPlayer';
+import NativeAudioPlayer, { PLAYER_SOURCE_NATIVE_AUDIO } from './Players/NativeAudioPlayer';
 import YoutubePlayer, { PLAYER_SOURCE_YOUTUBE } from './Players/YoutubePlayer';
 import _ from 'lodash';
 import './Player.scss';
@@ -111,10 +112,12 @@ class MediaPlayer extends Component {
     });
   }
 
-  handleOnSeek(setTime) {
-    this.setState({
-      setTime
-    });
+  handleOnSeek(time) {
+    const { onSeek } = this.props;
+
+    if (onSeek) {
+      onSeek(time);
+    }
 
     this.updateCurrentTime();
   }
@@ -128,20 +131,26 @@ class MediaPlayer extends Component {
   }
 
   getPlayer() {
-    const { source, url, state } = this.props;
-    const { setTime } = this.state;
+    const { source, url, state, currentTime } = this.props;
 
     const props = {
       url,
       state,
-      setTime,
+      setTime: currentTime,
       onReady: ::this.handlePlayerReady
     };
 
     switch (source) {
-      case PLAYER_SOURCE_NATIVE:
+      case PLAYER_SOURCE_NATIVE_VIDEO:
         return (
-          <NativePlayer
+          <NativeVideoPlayer
+            ref="player"
+            {...props}
+          />
+        );
+      case PLAYER_SOURCE_NATIVE_AUDIO:
+        return (
+          <NativeAudioPlayer
             ref="player"
             {...props}
           />
@@ -156,7 +165,7 @@ class MediaPlayer extends Component {
       default:
         return (
           <div>
-            <h1>Unsupported Source "source"</h1>
+            <h1>Unsupported Source "{source}"</h1>
             <p>Unfortunately the entered source is not supported by our system.</p>
           </div>
         );
@@ -164,16 +173,16 @@ class MediaPlayer extends Component {
   }
 
   render() {
-    const { current, duration, showControls, fullscreen, onPlay, onPause } = this.state;
-    const { source, state } = this.props;
-    const hideControls = state === PLAYER_STATE_PLAYING && !showControls;
+    const { current, duration, showControls, fullscreen } = this.state;
+    const { source, state, hideControls, onPlay, onPause } = this.props;
+    const hideControlBar = state === PLAYER_STATE_PLAYING && !showControls;
 
     let containerClasses = ['player-container'];
     let playerClasses = ['player'];
 
     playerClasses.push(source ? source : 'unsupported');
 
-    if (hideControls) {
+    if (hideControlBar) {
       containerClasses.push('hide-mouse');
     }
 
@@ -187,13 +196,14 @@ class MediaPlayer extends Component {
         onMouseMove={::this.handleOnMouseMove}
       >
         <div className={playerClasses.join(' ')}>
-          {this.getPlayer()}
+          { this.getPlayer() }
         </div>
         <ControlBar
           playerState={state}
           currentTime={current}
           duration={duration}
-          hidden={hideControls}
+          hidden={hideControlBar}
+          hideControls={hideControls}
           isFullscreen={fullscreen}
           onPlay={onPlay}
           onPause={onPause}

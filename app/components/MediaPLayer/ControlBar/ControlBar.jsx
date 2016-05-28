@@ -8,6 +8,7 @@ class ControlBar extends Component {
     currentTime: PropTypes.number.isRequired,
     duration: PropTypes.number,
     hidden: PropTypes.bool,
+    hideControls: PropTypes.bool,
     isFullscreen: PropTypes.bool,
     showSeekbar: PropTypes.bool,
     onPlay: PropTypes.func,
@@ -18,6 +19,7 @@ class ControlBar extends Component {
 
   static defaultProps = {
     hidden: false,
+    hideControls: false,
     showSeekbar: true,
     isFullscreen: false,
   };
@@ -39,6 +41,7 @@ class ControlBar extends Component {
       currentTime,
       duration,
       hidden,
+      hideControls,
       isFullscreen,
       showSeekbar,
       onPlay,
@@ -61,21 +64,25 @@ class ControlBar extends Component {
         </div>
 
         <div className="left-controls">
-          { playerState === PLAYER_STATE_PAUSED ? (
-            <button className="play" onClick={onPlay}>
-              &nbsp;
-            </button>
-          ) : (
-            <button className="pause" onClick={onPause}>
-              <i className="fa fa-pause" />
-            </button>
-          )  }
+          { showSeekbar && !hideControls ?
+            (
+              playerState === PLAYER_STATE_PAUSED ? (
+                <button className="play" onClick={onPlay}>
+                  &nbsp;
+                </button>
+              ) : (
+                <button className="pause" onClick={onPause}>
+                  <i className="fa fa-pause" />
+                </button>
+              )
+            ) : null
+          }
             <span>
               {this.formatTime(currentTime > -1 ? currentTime : 0)} / {this.formatTime(duration)}
             </span>
         </div>
 
-        { showSeekbar ? (
+        { showSeekbar && !hideControls ? (
           <div className="seekbar">
             <div className="seekbar-progress" style={{width:progress+"%"}}></div>
             <input type="range" min="0.0" max="100" step="0.5"

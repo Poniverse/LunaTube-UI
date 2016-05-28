@@ -35,7 +35,8 @@ $seekbarBackground: rgba($white, 0.4);
     }
 
     &.youtube,
-    &.unsupported {
+    &.unsupported,
+    &.native-audio {
       position: relative;
       padding-bottom: 56.25%; /* 16:9 */
       padding-top: 25px;
@@ -48,6 +49,11 @@ $seekbarBackground: rgba($white, 0.4);
         width: 100%;
         height: 100%;
       }
+    }
+
+    &.native-audio {
+      background: url(https://poniverse.net/img/ponies/fm_pony.svg) center no-repeat;
+
     }
 
     &.unsupported {
@@ -137,11 +143,19 @@ $seekbarBackground: rgba($white, 0.4);
 
     }
 
+    button, span {
+      display: inline-block;
+      padding: 11px 10px 9px;
+    }
+
     button {
       background: none;
       border: 0;
       outline: none;
-      padding: 11px 10px 9px;
+    }
+
+    button + span {
+      margin-left: -10px;
     }
 
 

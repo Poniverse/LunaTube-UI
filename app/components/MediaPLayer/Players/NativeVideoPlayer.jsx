@@ -3,38 +3,38 @@ import ReactDOM from 'react-dom';
 import path from 'path';
 import AbstractPlayer from './AbstractPlayer';
 
-export const PLAYER_SOURCE_NATIVE = 'native';
+export const PLAYER_SOURCE_NATIVE_VIDEO = 'native-video';
 
-class NativePlayer extends AbstractPlayer {
+class NativeVideoPlayer extends AbstractPlayer {
   componentDidMount() {
-    this.video = ReactDOM.findDOMNode( this.refs.video );
-    this.video.addEventListener("loadedmetadata", ::this.handleOnReady );
+    this.player = ReactDOM.findDOMNode( this.refs.player );
+    this.player.addEventListener("loadedmetadata", ::this.handleOnReady );
   }
 
   playVideo() {
-    this.video.play();
+    this.player.play();
     super.playVideo();
   }
 
   pauseVideo() {
-    this.video.pause();
+    this.player.pause();
     super.pauseVideo();
   }
 
   updateTime(time) {
     super.updateTime(time);
-    this.video.currentTime = time;
+    this.player.currentTime = time;
   }
 
   getCurrentTime() {
     return new Promise(resolve => {
-      resolve(this.video.currentTime);
+      resolve(this.player.currentTime);
     });
   }
 
   getDuration() {
     return new Promise(resolve => {
-      resolve(this.video.seekable.end(0));
+      resolve(this.player.seekable.end(0));
     });
   }
 
@@ -54,8 +54,7 @@ class NativePlayer extends AbstractPlayer {
 
     return (
       <video
-        ref="video"
-        loop="true"
+        ref="player"
       >
         <source src={url} type={"video/"+ extension}/>
       </video>
@@ -63,4 +62,4 @@ class NativePlayer extends AbstractPlayer {
   }
 }
 
-export default NativePlayer;
+export default NativeVideoPlayer;

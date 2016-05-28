@@ -3,7 +3,8 @@ import ReactTimeout from 'react-timeout';
 import { connect } from 'react-redux';
 import MediaPlayer  from '../../components/MediaPlayer/MediaPlayer';
 import { PLAYER_SOURCE_YOUTUBE }  from '../../components/MediaPlayer/Players/YoutubePlayer';
-import { PLAYER_SOURCE_NATIVE }  from '../../components/MediaPlayer/Players/NativePlayer';
+import { PLAYER_SOURCE_NATIVE_VIDEO }  from '../../components/MediaPlayer/Players/NativeVideoPlayer';
+import { PLAYER_SOURCE_NATIVE_AUDIO }  from '../../components/MediaPlayer/Players/NativeAudioPlayer';
 import { PLAYER_STATE_LOADING, PLAYER_STATE_PAUSED, PLAYER_STATE_PLAYING } from '../../components/MediaPlayer/Players/AbstractPlayer';
 import { becomeLeader, subscribeMessage, addTimer, clearTimer, play, pause, seekTo } from '../../redux/channel';
 
@@ -45,8 +46,8 @@ class Channel extends Component {
           <MediaPlayer
             ref="player"
             state={isPlaying ? PLAYER_STATE_PLAYING : PLAYER_STATE_PAUSED}
-            url="Ul49-3cc6Vk"
-            source={PLAYER_SOURCE_YOUTUBE}
+            url="http://192.99.131.205:8000/stream.mp3?played_at=1464475583"
+            source={PLAYER_SOURCE_NATIVE_AUDIO}
             currentTime={currentTime}
             onPlay={::this.handleOnPlay}
             onPause={::this.handleOnPause}
