@@ -5,7 +5,7 @@ import MediaPlayer  from '../../components/MediaPlayer/MediaPlayer';
 import { PLAYER_SOURCE_YOUTUBE }  from '../../components/MediaPlayer/Players/YoutubePlayer';
 import { PLAYER_SOURCE_NATIVE }  from '../../components/MediaPlayer/Players/NativePlayer';
 import { PLAYER_STATE_LOADING, PLAYER_STATE_PAUSED, PLAYER_STATE_PLAYING } from '../../components/MediaPlayer/Players/AbstractPlayer';
-import { becomeLeader, subscribeMessage, addTimer, clearTimer, play, pause } from '../../redux/channel';
+import { becomeLeader, subscribeMessage, addTimer, clearTimer, play, pause, seekTo } from '../../redux/channel';
 
 class Channel extends Component {
 
@@ -23,25 +23,21 @@ class Channel extends Component {
     this.props.dispatch(pause());
   }
 
+  handleOnSeek(time) {
+    this.props.dispatch(seekTo(time));
+  }
+
   render() {
     const { dispatch, channel: { currentTime, isLeader, leaderTimerId, isPlaying } } = this.props;
 
     let props = {};
 
-    if (isLeader) {
-      console.log(this.refs.player);
-    } else {
-      props.currentTime = currentTime;
-    }
-
     // Youtube:
     //  - 0elg9WVytMs (Doin it Right - Sim Gretina)
     //  - JHGkaShoyNs (Greg Young - CQRS and Event Sourcing - Code on the Beach 2014) (Hour long video)
     // MP4:
-    //  - http://www.w3schools.com/html/mov_bbb.mp4
-    //  - http://www.sample-videos.com/video/mp4/720/big_buck_bunny_720p_50mb.mp4
-
-    // 0elg9WVytMs
+    //  - http://www.w3schools.com/html/mov_bbb.mp4 - 10 second video
+    //  - http://distribution.bbb3d.renderfarming.net/video/mp4/bbb_sunflower_1080p_60fps_normal.mp4
 
     return (
       <div className="container">
@@ -49,10 +45,13 @@ class Channel extends Component {
           <MediaPlayer
             ref="player"
             state={isPlaying ? PLAYER_STATE_PLAYING : PLAYER_STATE_PAUSED}
-            url="http://www.w3schools.com/html/mov_bbb.mp4"
-            source={PLAYER_SOURCE_NATIVE}
+            url="Ul49-3cc6Vk"
+            source={PLAYER_SOURCE_YOUTUBE}
+            currentTime={currentTime}
             onPlay={::this.handleOnPlay}
             onPause={::this.handleOnPause}
+            onSeek={::this.handleOnSeek}
+            hideControls={!isLeader}
             {...props}
           />
 

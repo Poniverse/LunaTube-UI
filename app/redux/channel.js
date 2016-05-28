@@ -124,7 +124,7 @@ function updateTime(currentTime) {
   }
 }
 
-export function sendTime(currentTime) {
+export function seekTo(currentTime) {
   return (dispatch, getState) => {
     let payload = {
       currentTime
@@ -153,7 +153,7 @@ export function subscribeMessage() {
       return;
     }
 
-    // channel.on('update:time', message => dispatch(updateTime(message.currentTime)));
+    channel.on('update:time', message => dispatch(updateTime(message.currentTime)));
     channel.on('update:play', message => dispatch(play(false)));
     channel.on('update:pause', message => dispatch(pause(false)));
   };
