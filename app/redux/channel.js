@@ -84,7 +84,7 @@ export function play(push = true) {
   }
 }
 
-export function pause(push = false) {
+export function pause(push = true) {
   return (dispatch, state) => {
     if (push && state().channel.isLeader) {
       channel.push('sync:pause', {})
@@ -154,7 +154,7 @@ export function subscribeMessage() {
     }
 
     // channel.on('update:time', message => dispatch(updateTime(message.currentTime)));
-    // channel.on('update:play', message => dispatch(play(false)));
-    // channel.on('update:pause', message => dispatch(pause(false)));
+    channel.on('update:play', message => dispatch(play(false)));
+    channel.on('update:pause', message => dispatch(pause(false)));
   };
 }

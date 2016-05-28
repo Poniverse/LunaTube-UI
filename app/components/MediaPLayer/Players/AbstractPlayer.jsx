@@ -8,12 +8,17 @@ class AbstractPlayer extends Component {
   constructor() {
     super();
     this.state = {
-      state: PLAYER_STATE_LOADING
+      state: PLAYER_STATE_LOADING,
+      lastSetTime: 0
     };
   }
 
   componentWillReceiveProps(nextProps) {
-    const { state } = this.state;
+    const { state, lastSetTime } = this.state;
+
+    if (nextProps.setTime !== lastSetTime) {
+      this.updateTime(nextProps.setTime);
+    }
 
     if (state !== PLAYER_STATE_LOADING) {
       if (state === PLAYER_STATE_PAUSED && nextProps.state === PLAYER_STATE_PLAYING) {
@@ -41,6 +46,12 @@ class AbstractPlayer extends Component {
   handleOnReady(event) {
     this.setState({
       state: PLAYER_STATE_PAUSED
+    });
+  }
+
+  updateTime(time) {
+    this.setState({
+      lastSetTime: time
     });
   }
 }

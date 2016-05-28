@@ -19,6 +19,12 @@ class YoutubePlayer extends AbstractPlayer {
     super.pauseVideo();
   }
 
+  updateTime(time) {
+    super.updateTime(time);
+    this.player.seekTo(time)
+  }
+
+
   getCurrentTime() {
     return this.player.getCurrentTime();
   }

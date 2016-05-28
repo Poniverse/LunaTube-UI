@@ -21,9 +21,14 @@ class NativePlayer extends AbstractPlayer {
     super.pauseVideo();
   }
 
+  updateTime(time) {
+    super.updateTime(time);
+    this.video.currentTime = time;
+  }
+
   getCurrentTime() {
     return new Promise(resolve => {
-      resolve(this.video.played.end(0));
+      resolve(this.video.currentTime);
     });
   }
 
@@ -50,6 +55,7 @@ class NativePlayer extends AbstractPlayer {
     return (
       <video
         ref="video"
+        loop="true"
       >
         <source src={url} type={"video/"+ extension}/>
       </video>

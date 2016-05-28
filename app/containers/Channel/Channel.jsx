@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import ReactTimeout from 'react-timeout';
 import { connect } from 'react-redux';
-import Player  from '../../components/Player/Player';
-import { PLAYER_SOURCE_YOUTUBE }  from '../../components/Player/YoutubePlayer';
-import { PLAYER_SOURCE_NATIVE }  from '../../components/Player/NativePlayer';
-import { PLAYER_STATE_LOADING, PLAYER_STATE_PAUSED, PLAYER_STATE_PLAYING } from '../../components/Player/AbstractPlayer';
+import MediaPlayer  from '../../components/MediaPlayer/MediaPlayer';
+import { PLAYER_SOURCE_YOUTUBE }  from '../../components/MediaPlayer/Players/YoutubePlayer';
+import { PLAYER_SOURCE_NATIVE }  from '../../components/MediaPlayer/Players/NativePlayer';
+import { PLAYER_STATE_LOADING, PLAYER_STATE_PAUSED, PLAYER_STATE_PLAYING } from '../../components/MediaPlayer/Players/AbstractPlayer';
 import { becomeLeader, subscribeMessage, addTimer, clearTimer, play, pause } from '../../redux/channel';
 
 class Channel extends Component {
@@ -46,7 +46,7 @@ class Channel extends Component {
     return (
       <div className="container">
         <div className="col-xs-12">
-          <Player
+          <MediaPlayer
             ref="player"
             state={isPlaying ? PLAYER_STATE_PLAYING : PLAYER_STATE_PAUSED}
             url="http://www.w3schools.com/html/mov_bbb.mp4"
