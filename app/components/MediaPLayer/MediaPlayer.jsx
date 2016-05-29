@@ -131,14 +131,15 @@ class MediaPlayer extends Component {
   }
 
   getPlayer() {
-    const { source, url, state, currentTime, volume } = this.props;
+    const { source, url, state, currentTime, volume, onEnd } = this.props;
 
     const props = {
       url,
       state,
       volume,
+      onEnd,
       setTime: currentTime,
-      onReady: ::this.handlePlayerReady
+      onReady: ::this.handlePlayerReady,
     };
 
     switch (source) {

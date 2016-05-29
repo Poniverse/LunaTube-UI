@@ -32,6 +32,10 @@ class Channel extends Component {
     this.props.dispatch(setVolume(time));
   }
 
+  handleOnEnd() {
+    this.props.dispatch(pause());
+  }
+
   render() {
     const { dispatch, channel: { currentTime, isLeader, leaderTimerId, isPlaying, volume } } = this.props;
 
@@ -53,14 +57,15 @@ class Channel extends Component {
           <MediaPlayer
             ref="player"
             state={isPlaying ? PLAYER_STATE_PLAYING : PLAYER_STATE_PAUSED}
-            url="http://www.w3schools.com/html/mov_bbb.mp4"
-            source={PLAYER_SOURCE_NATIVE_VIDEO}
+            url="0elg9WVytMs"
+            source={PLAYER_SOURCE_YOUTUBE}
             currentTime={currentTime}
             volume={volume}
             onPlay={::this.handleOnPlay}
             onPause={::this.handleOnPause}
             onSeek={::this.handleOnSeek}
             onVolumeChange={::this.handleOnVolumeChange}
+            onEnd={::this.handleOnEnd}
             hideControls={!isLeader}
             {...props}
           />

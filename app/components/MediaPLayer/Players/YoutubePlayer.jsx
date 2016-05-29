@@ -51,7 +51,7 @@ class YoutubePlayer extends AbstractPlayer {
   }
 
   render() {
-    const { url } = this.props;
+    const { url, onEnd } = this.props;
     const opts = {
       // List of options: https://developers.google.com/youtube/player_parameters
       playerVars: {
@@ -70,6 +70,7 @@ class YoutubePlayer extends AbstractPlayer {
         videoId={url}
         opts={ opts }
         onReady={::this.handleOnReady}
+        onEnd={onEnd}
       />
     );
   }

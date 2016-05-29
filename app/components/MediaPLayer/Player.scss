@@ -119,12 +119,14 @@ $seekbarBackground: rgba($white, 0.4);
         margin: 0;
         right: 13px;
         width: 80px;
-        transition: all 0.3s linear;
+        transition: visibility 0s, opacity 0.3s linear;
         opacity: 1;
+        visibility: visible;
       }
 
       &.hide-volume {
         opacity: 0;
+        visibility: hidden;
       }
 
       .seekbar-progress {

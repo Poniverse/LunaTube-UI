@@ -9,6 +9,7 @@ class NativeVideoPlayer extends AbstractPlayer {
   componentDidMount() {
     this.player = ReactDOM.findDOMNode( this.refs.player );
     this.player.addEventListener("loadedmetadata", ::this.handleOnReady );
+    this.player.addEventListener("ended", ::this.handleOnEnd );
   }
 
   playVideo() {
@@ -51,6 +52,12 @@ class NativeVideoPlayer extends AbstractPlayer {
     });
 
     super.handleOnReady(event);
+  }
+
+  handleOnEnd() {
+    const { onEnd } = this.props;
+
+    onEnd();
   }
 
   render() {
