@@ -6,7 +6,7 @@ import { PLAYER_SOURCE_YOUTUBE }  from '../../components/MediaPlayer/Players/You
 import { PLAYER_SOURCE_NATIVE_VIDEO }  from '../../components/MediaPlayer/Players/NativeVideoPlayer';
 import { PLAYER_SOURCE_NATIVE_AUDIO }  from '../../components/MediaPlayer/Players/NativeAudioPlayer';
 import { PLAYER_STATE_LOADING, PLAYER_STATE_PAUSED, PLAYER_STATE_PLAYING } from '../../components/MediaPlayer/Players/AbstractPlayer';
-import { becomeLeader, subscribeMessage, addTimer, clearTimer, play, pause, seekTo } from '../../redux/channel';
+import { becomeLeader, subscribeMessage, addTimer, clearTimer, play, pause, seekTo, setVolume } from '../../redux/channel';
 
 class Channel extends Component {
 
@@ -28,8 +28,12 @@ class Channel extends Component {
     this.props.dispatch(seekTo(time));
   }
 
+  handleOnVolumeChange(time) {
+    this.props.dispatch(setVolume(time));
+  }
+
   render() {
-    const { dispatch, channel: { currentTime, isLeader, leaderTimerId, isPlaying } } = this.props;
+    const { dispatch, channel: { currentTime, isLeader, leaderTimerId, isPlaying, volume } } = this.props;
 
     let props = {};
 
@@ -39,6 +43,9 @@ class Channel extends Component {
     // MP4:
     //  - http://www.w3schools.com/html/mov_bbb.mp4 - 10 second video
     //  - http://distribution.bbb3d.renderfarming.net/video/mp4/bbb_sunflower_1080p_60fps_normal.mp4
+    // MP3:
+    //  - https://pony.fm/t1183/dl.mp3
+    //  - http://192.99.131.205:8000/stream.mp3
 
     return (
       <div className="container">
@@ -46,12 +53,14 @@ class Channel extends Component {
           <MediaPlayer
             ref="player"
             state={isPlaying ? PLAYER_STATE_PLAYING : PLAYER_STATE_PAUSED}
-            url="http://192.99.131.205:8000/stream.mp3?played_at=1464475583"
-            source={PLAYER_SOURCE_NATIVE_AUDIO}
+            url="http://www.w3schools.com/html/mov_bbb.mp4"
+            source={PLAYER_SOURCE_NATIVE_VIDEO}
             currentTime={currentTime}
+            volume={volume}
             onPlay={::this.handleOnPlay}
             onPause={::this.handleOnPause}
             onSeek={::this.handleOnSeek}
+            onVolumeChange={::this.handleOnVolumeChange}
             hideControls={!isLeader}
             {...props}
           />

@@ -11,6 +11,7 @@ const rootReducer = combineReducers({
   form,
   messages,
   channel
+  
 });
 
 export default rootReducer;

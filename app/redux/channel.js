@@ -8,12 +8,14 @@ export const ADD_TIMER = 'eqtv/channel/addTimer';
 export const CLEAR_TIMER = 'eqtv/channel/clearTimer';
 export const PLAY = 'eqtv/channel/play';
 export const PAUSE = 'eqtv/channel/pause';
+export const SET_VOLUME = 'eqtv/channel/setVolume';
 
 const initialState = {
   isLeader: false,
   currentTime: 0.00,
   leaderTimerId: 0,
-  isPlaying: false
+  isPlaying: false,
+  volume: 100
 };
 
 export function reducer(state = initialState, action) {
@@ -22,6 +24,11 @@ export function reducer(state = initialState, action) {
       return {
         ...state,
         currentTime: action.currentTime
+      };
+    case SET_VOLUME:
+      return {
+        ...state,
+        volume: action.volume
       };
     case BECOME_LEADER:
       return {
@@ -113,6 +120,13 @@ export function becomeLeader() {
   return {
     type: BECOME_LEADER,
     isLeader: true
+  };
+}
+
+export function setVolume(volume) {
+  return {
+    type: SET_VOLUME,
+    volume
   };
 }
 

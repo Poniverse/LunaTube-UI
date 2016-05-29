@@ -95,20 +95,34 @@ class ControlBar extends Component {
           >
             <button
               className="volume"
+              onClick={() => {
+                let setToVolume = 0;
+
+                if (volume === 0) {
+                   setToVolume = 100;
+                }
+
+                this.handleVolume({target:{value: setToVolume}});
+              }}
               onMouseEnter={() => {
                 this.setState({showVolume: true});
               }}
             >
-              <i className="fa fa-volume-up" />
+              <i className={classNames({
+                fa: true,
+                'fa-volume-off': volume === 0.00,
+                'fa-volume-down': volume > 0 && volume < 50,
+                'fa-volume-up': volume >= 50
+              })} />
             </button>
             <span className={classNames({timestamp: true, 'hide-timestamp': this.state.showVolume})}>
               {this.formatTime(currentTime > -1 ? currentTime : 0)} / { duration !== Infinity ? this.formatTime(duration) : 'LIVE' }
             </span>
             <div className={classNames({seekbar: true, volume: true, 'hide-volume': !this.state.showVolume})}>
               <div className="seekbar-progress" style={{width:volume+"%"}}></div>
-              <input type="range" min="0.0" max="100" step="20"
-                // value={progress}
-                // onChange={::this.handleSeek}
+              <input type="range" min="0.0" max="100" step="5"
+                value={volume}
+                onChange={::this.handleVolume}
               />
             </div>
           </div>
@@ -132,6 +146,14 @@ class ControlBar extends Component {
 
     if (onSeek) {
       onSeek(time);
+    }
+  }
+
+  handleVolume({ target: { value } }) {
+    const { onVolumeChange } = this.props;
+
+    if (onVolumeChange) {
+      onVolumeChange(parseFloat(value));
     }
   }
 }

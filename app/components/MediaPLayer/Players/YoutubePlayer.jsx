@@ -24,6 +24,10 @@ class YoutubePlayer extends AbstractPlayer {
     this.player.seekTo(time)
   }
 
+  updateVolume(volume) {
+    super.updateVolume(volume);
+    this.player.setVolume(volume);
+  }
 
   getCurrentTime() {
     return this.player.getCurrentTime();

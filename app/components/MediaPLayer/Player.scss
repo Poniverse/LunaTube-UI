@@ -185,6 +185,10 @@ $seekbarBackground: rgba($white, 0.4);
       margin-left: -10px;
     }
 
+    .volume > .fa {
+      min-width: 15px;
+    }
+
     // TODO: This should probably be a font somewhere
     .play {
       margin: 0 4px;

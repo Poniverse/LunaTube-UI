@@ -26,6 +26,11 @@ class NativeVideoPlayer extends AbstractPlayer {
     this.player.currentTime = time;
   }
 
+  updateVolume(volume) {
+    super.updateVolume(volume);
+    this.player.volume = volume / 100;
+  }
+
   getCurrentTime() {
     return new Promise(resolve => {
       resolve(this.player.currentTime);

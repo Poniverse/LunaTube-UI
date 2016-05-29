@@ -131,11 +131,12 @@ class MediaPlayer extends Component {
   }
 
   getPlayer() {
-    const { source, url, state, currentTime } = this.props;
+    const { source, url, state, currentTime, volume } = this.props;
 
     const props = {
       url,
       state,
+      volume,
       setTime: currentTime,
       onReady: ::this.handlePlayerReady
     };
@@ -174,7 +175,7 @@ class MediaPlayer extends Component {
 
   render() {
     const { current, duration, showControls, fullscreen } = this.state;
-    const { source, state, hideControls, onPlay, onPause } = this.props;
+    const { source, state, volume, hideControls, onPlay, onPause, onVolumeChange } = this.props;
     const hideControlBar = state === PLAYER_STATE_PLAYING && !showControls;
 
     let containerClasses = ['player-container'];
@@ -205,8 +206,10 @@ class MediaPlayer extends Component {
           hidden={hideControlBar}
           hideControls={hideControls}
           isFullscreen={fullscreen}
+          volume={volume}
           onPlay={onPlay}
           onPause={onPause}
+          onVolumeChange={onVolumeChange}
           onSeek={::this.handleOnSeek}
           onFullscreen={::this.toggleFullScreen}
         />
