@@ -28,7 +28,7 @@ $seekbarBackground: rgba($white, 0.4);
   }
 
   .player {
-    &.native > video {
+    &.native-video > video {
       display: block;
       width: 100% !important;
       height: auto !important;
@@ -77,7 +77,7 @@ $seekbarBackground: rgba($white, 0.4);
       opacity: 0;
     }
 
-    $left-width: 130px;
+    $left-width: 160px;
     $right-width: 32px;
 
     .left-controls {
@@ -88,6 +88,15 @@ $seekbarBackground: rgba($white, 0.4);
     .right-controls {
       float: right;
       width: 32px;
+    }
+
+    .timestamp {
+      transition: opacity 0.3s linear;
+      opacity: 1;
+
+      &.hide-timestamp {
+        opacity: 0;
+      }
     }
 
     .seekbar {
@@ -104,6 +113,19 @@ $seekbarBackground: rgba($white, 0.4);
       top: 50%;
       transform: translateY(-40%);
       transition: width 0.3s linear;
+
+      &.volume {
+        position: absolute;
+        margin: 0;
+        right: 13px;
+        width: 80px;
+        transition: all 0.3s linear;
+        opacity: 1;
+      }
+
+      &.hide-volume {
+        opacity: 0;
+      }
 
       .seekbar-progress {
         border-radius: 5px;
@@ -143,6 +165,11 @@ $seekbarBackground: rgba($white, 0.4);
 
     }
 
+    .volume-timestamp {
+      display: inline-block;
+      position: relative;
+    }
+
     button, span {
       display: inline-block;
       padding: 11px 10px 9px;
@@ -157,7 +184,6 @@ $seekbarBackground: rgba($white, 0.4);
     button + span {
       margin-left: -10px;
     }
-
 
     // TODO: This should probably be a font somewhere
     .play {

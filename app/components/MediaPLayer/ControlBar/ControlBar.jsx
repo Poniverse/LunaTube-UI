@@ -1,6 +1,7 @@
 import React, {Component, PropTypes} from 'react';
 import {PLAYER_STATE_LOADING, PLAYER_STATE_PAUSED, PLAYER_STATE_PLAYING} from '../Players/AbstractPlayer'
 import moment from 'moment';
+import classNames from 'classnames';
 
 class ControlBar extends Component {
   static propTypes = {
@@ -22,7 +23,15 @@ class ControlBar extends Component {
     hideControls: false,
     showSeekbar: true,
     isFullscreen: false,
+    volume: 100
   };
+
+  constructor() {
+    super();
+    this.state = {
+      showVolume: false
+    };
+  }
 
   formatTime(seconds) {
     const timestamp = moment(new Date).startOf('day').add(Math.floor(seconds), 'seconds');
@@ -46,7 +55,8 @@ class ControlBar extends Component {
       showSeekbar,
       onPlay,
       onPause,
-      onFullscreen
+      onFullscreen,
+      volume
     } = this.props;
     const progress = (currentTime / duration) * 100;
     const classes = ['control-bar'];
@@ -76,11 +86,32 @@ class ControlBar extends Component {
                   <i className="fa fa-pause" />
                 </button>
               )
-            ) : null
-          }
-            <span>
-              {this.formatTime(currentTime > -1 ? currentTime : 0)} / { duration !== Infinity ? this.formatTime(duration) : 'LIVE'}
+            ) : null }
+          <div
+            className="volume-timestamp"
+            onMouseLeave={() => {
+              this.setState({showVolume: false});
+            }}
+          >
+            <button
+              className="volume"
+              onMouseEnter={() => {
+                this.setState({showVolume: true});
+              }}
+            >
+              <i className="fa fa-volume-up" />
+            </button>
+            <span className={classNames({timestamp: true, 'hide-timestamp': this.state.showVolume})}>
+              {this.formatTime(currentTime > -1 ? currentTime : 0)} / { duration !== Infinity ? this.formatTime(duration) : 'LIVE' }
             </span>
+            <div className={classNames({seekbar: true, volume: true, 'hide-volume': !this.state.showVolume})}>
+              <div className="seekbar-progress" style={{width:volume+"%"}}></div>
+              <input type="range" min="0.0" max="100" step="20"
+                // value={progress}
+                // onChange={::this.handleSeek}
+              />
+            </div>
+          </div>
         </div>
 
         { !live && showSeekbar && !hideControls ? (
