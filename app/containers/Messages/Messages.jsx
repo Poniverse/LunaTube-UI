@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import Chat from '../../components/Chat/Chat';
 import { sendMessage, subscribeMessage } from '../../redux/message';
 
 class Messages extends Component {
@@ -9,29 +10,23 @@ class Messages extends Component {
     dispatch(subscribeMessage());
   }
 
-  handleFormSubmit(event) {
-    event.preventDefault();
-
+  sendMessageToServer(message) {
     const { dispatch } = this.props;
 
-    dispatch(sendMessage(this.refs.message.value));
-
-    this.refs.message.value = '';
+    dispatch(sendMessage(message));
   }
 
   render() {
     const { messages } = this.props;
 
     return (
-      <div>
-        <ul>
-          { messages.map((message, key) => <li key={key}>{message}</li>) }
-        </ul>
-
-        <form onSubmit={::this.handleFormSubmit}>
-          <input type="text" ref="message" />
-          <button>Send Message</button>
-        </form>
+      <div className="container">
+        <div className="col-xs-12">
+          <Chat
+            messages={messages}
+            onSendMessage={::this.sendMessageToServer}
+            />
+        </div>
       </div>
     );
   }
