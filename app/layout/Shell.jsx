@@ -1,6 +1,8 @@
 import React, { Component, PropTypes } from 'react';
-import '../../node_modules/bootstrap-sass/assets/stylesheets/_bootstrap.scss';
-import '../../node_modules/font-awesome/scss/font-awesome.scss';
+import Header from './Header/Header';
+import Footer from './Footer/Footer';
+import '../style/vendor.scss';
+import './Shell.scss';
 
 /*
  * React-router's <Router> component renders <Route>'s
@@ -14,7 +16,11 @@ import '../../node_modules/font-awesome/scss/font-awesome.scss';
 const Shell = ({children}) => {
   return (
     <div className="shell">
-      {children}
+      <Header />
+      <main>
+        {children}
+      </main>
+      <Footer />
     </div>
   );
 };
