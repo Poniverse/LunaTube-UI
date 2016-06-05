@@ -1,5 +1,5 @@
 defmodule LunaTube.Endpoint do
-  use Phoenix.Endpoint, otp_app: :eqtv
+  use Phoenix.Endpoint, otp_app: :lunatube
 
   socket "/socket", LunaTube.UserSocket
 
@@ -8,7 +8,7 @@ defmodule LunaTube.Endpoint do
   # You should set gzip to true if you are running phoenix.digest
   # when deploying your static files in production.
   plug Plug.Static,
-    at: "/", from: :eqtv, gzip: false,
+    at: "/", from: :lunatube, gzip: false,
     only: ~w(css fonts images js favicon.ico robots.txt)
 
   # Code reloading can be explicitly enabled under the
@@ -30,7 +30,7 @@ defmodule LunaTube.Endpoint do
 
   plug Plug.Session,
     store: :cookie,
-    key: "_eqtv_key",
+    key: "_lunatube_key",
     signing_salt: "kGWQd8i4"
 
   plug LunaTube.Router

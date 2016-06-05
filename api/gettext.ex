@@ -20,5 +20,5 @@ defmodule LunaTube.Gettext do
 
   See the [Gettext Docs](http://hexdocs.pm/gettext) for detailed usage.
   """
-  use Gettext, otp_app: :eqtv
+  use Gettext, otp_app: :lunatube
 end

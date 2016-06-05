@@ -5,8 +5,12 @@
 # is restricted to this project.
 use Mix.Config
 
+# Configures the namespace used by Phoenix generators
+config :lunatube,
+  app_namespace: LunaTube
+
 # Configures the endpoint
-config :eqtv, LunaTube.Endpoint,
+config :lunatube, LunaTube.Endpoint,
   url: [host: "localhost"],
   root: Path.dirname(__DIR__),
   secret_key_base: "V1OdlebP1K2w/33z9XC0BZqEzePVv5v3l+2UWZBpdfNLSA5Mce0qsVk4o5NTdCVT",
