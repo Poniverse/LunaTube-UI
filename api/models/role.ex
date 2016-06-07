@@ -1,17 +1,15 @@
-defmodule LunaTube.User do
+defmodule LunaTube.Role do
   use LunaTube.Web, :model
 
-  schema "users" do
-    field :username, :string
-    field :display_name, :string
-    field :email, :string
+  schema "roles" do
+    field :name, :string
 
-    has_many :roles, LunaTube.UserRole
+    has_many :users, LunaTube.UserRole
 
     timestamps
   end
 
-  @required_fields ~w(username display_name email)
+  @required_fields ~w(name)
   @optional_fields ~w()
 
   @doc """
