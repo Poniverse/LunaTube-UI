@@ -57,7 +57,7 @@ class Channel extends Component {
           <MediaPlayer
             ref="player"
             state={isPlaying ? PLAYER_STATE_PLAYING : PLAYER_STATE_PAUSED}
-            url="0elg9WVytMs"
+            url="Qi69aTLYF8E"
             source={PLAYER_SOURCE_YOUTUBE}
             currentTime={currentTime}
             volume={volume}
