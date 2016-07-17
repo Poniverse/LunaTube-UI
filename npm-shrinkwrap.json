@@ -39,6 +39,11 @@
       "from": "acorn-jsx@>=3.0.0 <4.0.0",
       "resolved": "https://npm.socratesdev.co.uk/acorn-jsx/-/acorn-jsx-3.0.1.tgz"
     },
+    "add-dom-event-listener": {
+      "version": "1.0.1",
+      "from": "add-dom-event-listener@>=1.0.0 <2.0.0",
+      "resolved": "https://npm.socratesdev.co.uk/add-dom-event-listener/-/add-dom-event-listener-1.0.1.tgz"
+    },
     "after": {
       "version": "0.8.1",
       "from": "after@0.8.1",
@@ -801,6 +806,11 @@
       "from": "brorand@>=1.0.1 <2.0.0",
       "resolved": "https://registry.npmjs.org/brorand/-/brorand-1.0.5.tgz"
     },
+    "browser-cookies": {
+      "version": "1.0.8",
+      "from": "browser-cookies@>=1.0.8 <2.0.0",
+      "resolved": "https://npm.socratesdev.co.uk/browser-cookies/-/browser-cookies-1.0.8.tgz"
+    },
     "browserify-aes": {
       "version": "1.0.6",
       "from": "browserify-aes@>=1.0.4 <2.0.0",
@@ -1025,10 +1035,20 @@
       "from": "component-bind@1.0.0",
       "resolved": "https://registry.npmjs.org/component-bind/-/component-bind-1.0.0.tgz"
     },
+    "component-classes": {
+      "version": "1.2.6",
+      "from": "component-classes@>=1.2.5 <2.0.0",
+      "resolved": "https://npm.socratesdev.co.uk/component-classes/-/component-classes-1.2.6.tgz"
+    },
     "component-emitter": {
       "version": "1.1.2",
       "from": "component-emitter@1.1.2",
       "resolved": "https://registry.npmjs.org/component-emitter/-/component-emitter-1.1.2.tgz"
+    },
+    "component-indexof": {
+      "version": "0.0.3",
+      "from": "component-indexof@0.0.3",
+      "resolved": "https://npm.socratesdev.co.uk/component-indexof/-/component-indexof-0.0.3.tgz"
     },
     "component-inherit": {
       "version": "0.0.3",
@@ -1170,6 +1190,11 @@
           "resolved": "https://registry.npmjs.org/source-map/-/source-map-0.1.43.tgz"
         }
       }
+    },
+    "css-animation": {
+      "version": "1.2.5",
+      "from": "css-animation@>=1.0.0 <2.0.0",
+      "resolved": "https://npm.socratesdev.co.uk/css-animation/-/css-animation-1.2.5.tgz"
     },
     "css-color-names": {
       "version": "0.0.3",
@@ -2788,6 +2813,11 @@
       "from": "ignore-by-default@>=1.0.0 <2.0.0",
       "resolved": "https://registry.npmjs.org/ignore-by-default/-/ignore-by-default-1.0.1.tgz"
     },
+    "immutable": {
+      "version": "3.8.1",
+      "from": "immutable@>=3.7.5 <4.0.0",
+      "resolved": "https://npm.socratesdev.co.uk/immutable/-/immutable-3.8.1.tgz"
+    },
     "imurmurhash": {
       "version": "0.1.4",
       "from": "imurmurhash@>=0.1.4 <0.2.0",
@@ -3646,6 +3676,11 @@
       "from": "nested-error-stacks@>=1.0.0 <2.0.0",
       "resolved": "https://registry.npmjs.org/nested-error-stacks/-/nested-error-stacks-1.0.2.tgz"
     },
+    "node-cache": {
+      "version": "3.2.1",
+      "from": "node-cache@latest",
+      "resolved": "https://npm.socratesdev.co.uk/node-cache/-/node-cache-3.2.1.tgz"
+    },
     "node-fetch": {
       "version": "1.5.2",
       "from": "node-fetch@>=1.0.1 <2.0.0",
@@ -4277,6 +4312,21 @@
       "from": "rc@>=1.0.1 <2.0.0",
       "resolved": "https://registry.npmjs.org/rc/-/rc-1.1.6.tgz"
     },
+    "rc-animate": {
+      "version": "2.3.0",
+      "from": "rc-animate@>=2.0.0 <3.0.0",
+      "resolved": "https://npm.socratesdev.co.uk/rc-animate/-/rc-animate-2.3.0.tgz"
+    },
+    "rc-dialog": {
+      "version": "6.1.1",
+      "from": "rc-dialog@>=6.1.1 <7.0.0",
+      "resolved": "https://npm.socratesdev.co.uk/rc-dialog/-/rc-dialog-6.1.1.tgz"
+    },
+    "rc-util": {
+      "version": "3.2.1",
+      "from": "rc-util@>=3.0.0 <4.0.0",
+      "resolved": "https://npm.socratesdev.co.uk/rc-util/-/rc-util-3.2.1.tgz"
+    },
     "react": {
       "version": "15.1.0",
       "from": "react@>=15.0.2 <16.0.0",
@@ -4345,6 +4395,11 @@
       "version": "3.0.1",
       "from": "react-lazy-cache@>=3.0.1 <4.0.0",
       "resolved": "https://registry.npmjs.org/react-lazy-cache/-/react-lazy-cache-3.0.1.tgz"
+    },
+    "react-loader": {
+      "version": "2.4.0",
+      "from": "react-loader@>=2.0.0 <3.0.0",
+      "resolved": "https://npm.socratesdev.co.uk/react-loader/-/react-loader-2.4.0.tgz"
     },
     "react-overlays": {
       "version": "0.6.3",
@@ -4509,10 +4564,42 @@
       "from": "redux@>=3.3.1 <4.0.0",
       "resolved": "https://npm.socratesdev.co.uk/redux/-/redux-3.5.2.tgz"
     },
+    "redux-auth": {
+      "version": "0.0.3-beta15",
+      "from": "redux-auth@latest",
+      "resolved": "https://npm.socratesdev.co.uk/redux-auth/-/redux-auth-0.0.3-beta15.tgz",
+      "dependencies": {
+        "babel-runtime": {
+          "version": "5.8.38",
+          "from": "babel-runtime@>=5.8.38 <6.0.0",
+          "resolved": "https://registry.npmjs.org/babel-runtime/-/babel-runtime-5.8.38.tgz"
+        },
+        "core-js": {
+          "version": "1.2.6",
+          "from": "core-js@>=1.0.0 <2.0.0",
+          "resolved": "https://registry.npmjs.org/core-js/-/core-js-1.2.6.tgz"
+        },
+        "query-string": {
+          "version": "2.4.2",
+          "from": "query-string@>=2.4.2 <3.0.0",
+          "resolved": "https://registry.npmjs.org/query-string/-/query-string-2.4.2.tgz"
+        },
+        "react-bootstrap": {
+          "version": "0.29.5",
+          "from": "react-bootstrap@>=0.29.5 <0.30.0",
+          "resolved": "https://npm.socratesdev.co.uk/react-bootstrap/-/react-bootstrap-0.29.5.tgz"
+        }
+      }
+    },
     "redux-form": {
       "version": "5.2.4",
       "from": "redux-form@>=5.2.3 <6.0.0",
       "resolved": "https://npm.socratesdev.co.uk/redux-form/-/redux-form-5.2.4.tgz"
+    },
+    "redux-immutablejs": {
+      "version": "0.0.8",
+      "from": "redux-immutablejs@0.0.8",
+      "resolved": "https://npm.socratesdev.co.uk/redux-immutablejs/-/redux-immutablejs-0.0.8.tgz"
     },
     "redux-logger": {
       "version": "2.6.1",
@@ -4951,6 +5038,11 @@
       "version": "1.2.1",
       "from": "spdx-license-ids@>=1.0.2 <2.0.0",
       "resolved": "https://npm.socratesdev.co.uk/spdx-license-ids/-/spdx-license-ids-1.2.1.tgz"
+    },
+    "spin.js": {
+      "version": "2.3.2",
+      "from": "spin.js@>=2.0.0 <3.0.0",
+      "resolved": "https://npm.socratesdev.co.uk/spin.js/-/spin.js-2.3.2.tgz"
     },
     "split": {
       "version": "0.3.3",

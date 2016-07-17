@@ -11,6 +11,8 @@ import NavbarToggle from 'react-bootstrap/lib/NavbarToggle';
 
 class Header extends Component {
   render() {
+    const { user } = this.props;
+
     return (
       <header>
         <Navbar fixedTop>
@@ -29,13 +31,27 @@ class Header extends Component {
                 <NavItem eventKey={2} href="#">Channel</NavItem>
               </LinkContainer>
             </Nav>
-            <Nav pullRight>
-              <NavItem eventKey={1} href="#">Sign In</NavItem>
-            </Nav>
+            {user ? this.renderLoggedIn(user) : this.renderGuest()}
           </NavbarCollapse>
         </Navbar>
       </header>
     )
+  }
+
+  renderLoggedIn(user) {
+    return (
+      <Nav pullRight>
+        <NavItem eventKey={1}>Welcome, {user.username}</NavItem>
+      </Nav>
+    );
+  }
+
+  renderGuest() {
+    return (
+      <Nav pullRight>
+        <NavItem eventKey={1} href="#">Sign In</NavItem>
+      </Nav>
+    );
   }
 }
 

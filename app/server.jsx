@@ -8,6 +8,7 @@ import configureStore from './store/configureStore';
 import headconfig from './components/Meta/Meta';
 import { fetchComponentDataBeforeRender } from 'api/fetchComponentDataBeforeRender';
 import { IntlProvider } from 'react-intl';
+import { configure } from "redux-auth";
 
 const clientConfig = {
   host: process.env.HOSTNAME || 'localhost',
@@ -97,23 +98,38 @@ export default function render(req, res) {
         </Provider>
       );
 
-      //This method waits for all render component promises to resolve before returning to browser
-      fetchComponentDataBeforeRender(store.dispatch, renderProps.components, renderProps.params)
-        .then(html => {
-          const componentHTML = renderToString(InitialView);
-          const initialState = store.getState();
+      const query = qs.stringify(request.query);
+      const currentLocation = request.path + (query.length ? "?" + query : "");
+      const cookies = request.headers.cookies;
 
-          res.status(200).end(renderFullPage(componentHTML, initialState, {
-            title: headconfig.title,
-            meta: headconfig.meta,
-            link: headconfig.link
-          }));
-        })
-        .catch(err => {
-          console.trace(err);
-          // TODO: Render friendlier error page
-          res.end(renderFullPage("", {}));
-        });
+      //This method waits for all render component promises to resolve before returning to browser
+      store.dispatch(configure(
+        {apiUrl: 'http://' + clientConfig.host + ':' + clientConfig.port},
+        {isServer: true, cookies, currentLocation}
+      )).then(function({redirectPath, blank} = {}) {
+        if (blank) {
+          // if `blank` is true, this is an OAuth redirect and should not
+          // be rendered
+          res.status(200).end(renderFullPage("<noscript />", store.getState()));
+        }
+
+        fetchComponentDataBeforeRender(store.dispatch, renderProps.components, renderProps.params)
+          .then(html => {
+            const componentHTML = renderToString(InitialView);
+            const initialState = store.getState();
+
+            res.status(200).end(renderFullPage(componentHTML, initialState, {
+              title: headconfig.title,
+              meta: headconfig.meta,
+              link: headconfig.link
+            }));
+          })
+          .catch(err => {
+            console.trace(err);
+            // TODO: Render friendlier error page
+            // res.end(renderFullPage("", {}));
+          });
+      })
     } else {
       res.status(404).send('Not Found');
     }

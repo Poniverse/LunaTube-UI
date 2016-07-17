@@ -3,7 +3,9 @@ import { routerMiddleware } from 'react-router-redux';
 import thunk from 'redux-thunk';
 import rootReducer from '../reducers';
 import promiseMiddleware from '../api/promiseMiddleware';
+import axios from 'axios';
 import createLogger from 'redux-logger';
+import { configure } from "redux-auth";
 
 /*
  * @param {Object} initial state to bootstrap our stores with for server-side rendering
@@ -11,7 +13,7 @@ import createLogger from 'redux-logger';
  *                          while using browserHistory for client-side
  *                          rendering.
  */
-export default function configureStore(initialState, history) {
+export default function configureStore(initialState, history, cookies = null) {
   let middleware = [thunk, promiseMiddleware];
   // Installs hooks that always keep react-router and redux
   // store in sync

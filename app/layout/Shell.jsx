@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import { connect } from 'react-redux';
 import Header from './Header/Header';
 import Footer from './Footer/Footer';
 import '../style/vendor.scss';
@@ -13,10 +14,10 @@ import './Shell.scss';
  * A better explanation of react-router is available here:
  * https://github.com/rackt/react-router/blob/latest/docs/Introduction.md
  */
-const Shell = ({children}) => {
+const Shell = ({children, user}) => {
   return (
     <div className="shell">
-      <Header />
+      <Header user={user} />
       <main>
         {children}
       </main>
@@ -29,4 +30,10 @@ Shell.propTypes = {
   children: PropTypes.object
 };
 
-export default Shell;
+function mapStateToProps(state) {
+  return {
+    user: state.user
+  }
+}
+
+export default connect(mapStateToProps)(Shell);
