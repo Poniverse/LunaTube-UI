@@ -5,7 +5,6 @@ import rootReducer from '../reducers';
 import promiseMiddleware from '../api/promiseMiddleware';
 import axios from 'axios';
 import createLogger from 'redux-logger';
-import { configure } from "redux-auth";
 
 /*
  * @param {Object} initial state to bootstrap our stores with for server-side rendering

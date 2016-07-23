@@ -26,3 +26,7 @@ footer,
 main:after {
   height: $navbar-height;
 }
+
+.poniverse-iframe {
+  overflow: hidden;
+}

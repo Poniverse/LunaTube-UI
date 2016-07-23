@@ -8,12 +8,13 @@ const oauthClient = {
 
 export function getAccessToken(data) {
   const requestData = {
+    redirect_uri: 'http://localhost:3000/auth/oauth',
     ...oauthClient,
     ...data
   };
 
   return axios
-    .post('/oauth/access_token', requestData);
+    .post('https://poniverse.net/oauth/access_token', requestData);
 }
 
 export function storeOAuthData(res, {access_token, refresh_token}) {

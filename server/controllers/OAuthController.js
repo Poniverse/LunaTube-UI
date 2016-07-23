@@ -1,4 +1,16 @@
+import axios from 'axios';
 import {getOAuthData, storeOAuthData, getAccessToken} from "../helpers/oauth";
+
+
+export function redirectToPoniverse(req, res) {
+  const queryString = [
+    'response_type=code',
+    'client_id=' + process.env.PONIVERSE_CLIENT_ID,
+    'redirect_uri=http://localhost:3000/auth/oauth'
+  ];
+
+  res.redirect('https://poniverse.net/oauth/authorize?' + queryString.join('&'))
+}
 
 export function authenticate(req, res) {
   // TODO: This should be able to process it through an API call
@@ -17,12 +29,24 @@ export function authenticate(req, res) {
     .then(response => {
       storeOAuthData(res, response.data);
 
-      res.status(200).send({
-        access_token: response.data.access_token
-      });
+      axios
+        .get('https://api.poniverse.net/v1/users/me', null, {
+          headers: {
+            Authorization: "Bearer " + response.data.access_token
+          }
+        })
+        .then(userRes => {
+          res.status(200).send({
+            access_token: response.data.access_token,
+            user: userRes.data
+          });
+        })
+        .catch(error => {
+          res.status(error.status).send(error.data);
+        });
     })
     .catch(error => {
-      res.status(error.status).send(res.data);
+      res.status(error.status).send(error.data);
     });
 }
 

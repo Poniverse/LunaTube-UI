@@ -10,6 +10,11 @@ import NavbarCollapse from 'react-bootstrap/lib/NavbarCollapse';
 import NavbarToggle from 'react-bootstrap/lib/NavbarToggle';
 
 class Header extends Component {
+  propTypes = {
+    user: PropTypes.object,
+    onLoginClick: PropTypes.func
+  };
+
   render() {
     const { user } = this.props;
 
@@ -47,9 +52,11 @@ class Header extends Component {
   }
 
   renderGuest() {
+    const { onLoginClick } = this.props;
+
     return (
       <Nav pullRight>
-        <NavItem eventKey={1} href="#">Sign In</NavItem>
+        <NavItem eventKey={1} href="#" onClick={onLoginClick}>Sign In</NavItem>
       </Nav>
     );
   }
