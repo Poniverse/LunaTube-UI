@@ -9,5 +9,9 @@ defmodule LunaTube.Router do
     pipe_through :api
 
     get "/", HelloWorld, :index
+
+    get "/auth", AuthController, :index
+    get "/auth/callback", AuthController, :callback
+
   end
 end
