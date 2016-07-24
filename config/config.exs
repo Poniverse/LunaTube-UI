@@ -27,6 +27,9 @@ config :logger, :console,
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env}.exs"
 
+# Import relevant config secrets. Acts the same as .env files
+import_config "config.secrets.exs"
+
 # Configure phoenix generators
 config :phoenix, :generators,
   migration: true,
