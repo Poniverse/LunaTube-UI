@@ -19,7 +19,7 @@ defmodule LunaTube.Mixfile do
   def application do
     [mod: {LunaTube, []},
      applications: [:phoenix, :cowboy, :logger, :gettext,
-                    :phoenix_ecto, :postgrex, :oauth2]]
+                    :phoenix_ecto, :postgrex, :oauth2, :guardian]]
   end
 
   # Specifies which paths to compile per environment.
@@ -35,7 +35,8 @@ defmodule LunaTube.Mixfile do
      {:phoenix_ecto, "~> 2.0"},
      {:gettext, "~> 0.9"},
      {:cowboy, "~> 1.0"},
-     {:oauth2, "~> 0.6"}]
+     {:oauth2, "~> 0.6"},
+     {:guardian, "~> 0.12.0"}]
   end
 
   # Aliases are shortcut or tasks specific to the current project.

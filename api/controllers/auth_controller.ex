@@ -13,8 +13,9 @@ defmodule LunaTube.AuthController do
     pv_user = get_user!(token)
 
     {:ok, lunatube_user} = create_lunatube_user(token, pv_user)
+    {:ok, jwt, _full_claims} = lunatube_user |> Guardian.encode_and_sign(:token)
 
-    json conn, lunatube_user
+    json conn, %{user: lunatube_user, token: jwt}
   end
 
   defp authorize_url!(), do: Poniverse.authorize_url!
