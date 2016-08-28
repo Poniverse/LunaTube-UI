@@ -47,24 +47,6 @@ class Shell extends Component {
       </div>
     );
   }
-
-  renderAuthModal() {
-    const { auth, actions } = this.props;
-
-    return (
-      <Modal show={auth.showAuth} onHide={actions.finishAuth}>
-        <Modal.Header closeButton>
-          <Modal.Title>Poniverse Auth</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <iframe src="/auth/redirect" width="100%" height="600px" frameBorder="0" scrolling="no" className="poniverse-iframe"></iframe>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button onClick={this.close}>Close</Button>
-        </Modal.Footer>
-      </Modal>
-    )
-  }
 }
 ;
 
