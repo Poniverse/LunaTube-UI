@@ -1,3 +1,3 @@
 export default (app) => {
-    // TODO: Auth proxy routing
+  app.get('/auth/redirect', (req, res) => res.redirect(`${process.env.API_URL}/auth/`));
 };
