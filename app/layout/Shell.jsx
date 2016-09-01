@@ -6,7 +6,7 @@ import Footer from './Footer/Footer';
 import Auth from './Auth/Auth';
 import '../style/vendor.scss';
 import './Shell.scss';
-import { startAuth, finishAuth } from '../redux/auth';
+import { login } from '../redux/auth';
 
 /*
  * React-router's <Router> component renders <Route>'s
@@ -30,20 +30,32 @@ import { startAuth, finishAuth } from '../redux/auth';
 // }
 
 class Shell extends Component {
+  handleLoginClick(event) {
+    this.props.dispatch(login())
+  }
+
+  handleAuthModalClose(event) {
+    // const { dispatch } = this.props;
+    // dispatch(finishAuth());
+  }
+
   render() {
-    const { children, auth, actions } = this.props;
+    const { children, auth } = this.props;
 
     return (
       <div className="shell">
-        <Header user={auth.user} onLoginClick={() => {
-          actions.startAuth();
-        }}/>
+        <Header user={auth.user}
+                isAuthenticating={auth.authenticating}
+                onLoginClick={::this.handleLoginClick}/>
         <main>
           {children}
         </main>
         <Footer />
-        <Auth showModal={auth.showAuthModal}
-              onModalClose={actions.finishAuth} />
+        <Auth
+          isAuthenticating={auth.authenticating}
+          authUrl="/auth/redirect"
+          showModal={auth.showModal}
+          onModalClose={::this.handleAuthModalClose} />
       </div>
     );
   }
@@ -61,10 +73,10 @@ function mapStateToProps(state) {
   };
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-    actions: bindActionCreators({startAuth, finishAuth}, dispatch)
-  };
-}
+// function mapDispatchToProps(dispatch) {
+//   return {
+//     actions: bindActionCreators({login, finishAuth}, dispatch)
+//   };
+// }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Shell);
+export default connect(mapStateToProps)(Shell);

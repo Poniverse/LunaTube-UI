@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { IndexLink } from 'react-router';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Navbar, NavbarBrand, Nav, NavItem } from 'react-bootstrap';
+import classNames from 'classnames';
 // Importing these because the export from the module doesn't contain
 // the child components, which breaks the serverside rendering if
 // used the way the documentation wants us to.
@@ -47,11 +48,20 @@ class Header extends Component {
   }
 
   renderGuest() {
-    const { onLoginClick } = this.props;
+    const { isAuthenticating , onLoginClick } = this.props;
 
     return (
       <Nav pullRight>
-        <NavItem eventKey={1} onClick={onLoginClick}>Sign in</NavItem>
+        <NavItem eventKey={1} onClick={onLoginClick}>
+          <i className={classNames({
+            fa: true,
+            'fa-fw': true,
+            'fa-sign-in': !isAuthenticating,
+            'fa-spinner': isAuthenticating,
+            'fa-pulse': isAuthenticating
+          })} />
+          Sign in
+        </NavItem>
       </Nav>
     );
   }

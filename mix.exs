@@ -18,7 +18,7 @@ defmodule LunaTube.Mixfile do
   # Type `mix help compile.app` for more information.
   def application do
     [mod: {LunaTube, []},
-     applications: [:phoenix, :cowboy, :logger, :gettext,
+     applications: [:phoenix, :phoenix_html, :cowboy, :logger, :gettext,
                     :phoenix_ecto, :postgrex, :oauth2, :guardian]]
   end
 
@@ -33,6 +33,7 @@ defmodule LunaTube.Mixfile do
     [{:phoenix, "~> 1.1.4"},
      {:postgrex, ">= 0.0.0"},
      {:phoenix_ecto, "~> 2.0"},
+     {:phoenix_html, "~> 2.4"},
      {:gettext, "~> 0.9"},
      {:cowboy, "~> 1.0"},
      {:oauth2, "~> 0.6"},
