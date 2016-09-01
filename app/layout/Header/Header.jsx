@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { IndexLink } from 'react-router';
 import { LinkContainer } from 'react-router-bootstrap';
-import { Navbar, NavbarBrand, Nav, NavItem } from 'react-bootstrap';
+import { Navbar, NavbarBrand, Nav, NavItem, NavDropdown, MenuItem } from 'react-bootstrap';
 import classNames from 'classnames';
 // Importing these because the export from the module doesn't contain
 // the child components, which breaks the serverside rendering if
@@ -40,9 +40,23 @@ class Header extends Component {
   }
 
   renderLoggedIn(user) {
+    const { onLogoutClick } = this.props;
+
     return (
       <Nav pullRight>
-        <NavItem eventKey={1}>Welcome, {user.username}</NavItem>
+        <NavDropdown
+          eventKey={1}
+          title={
+            <span>
+              <i className="fa fa-user" /> {user.username}
+            </span>
+          }>
+          <MenuItem eventKey={1.1}>Profile</MenuItem>
+          <MenuItem divider />
+          <MenuItem eventKey={1.2} onClick={onLogoutClick}>
+            <i className="fa fa-sign-out" /> Logout
+          </MenuItem>
+        </NavDropdown>
       </Nav>
     );
   }

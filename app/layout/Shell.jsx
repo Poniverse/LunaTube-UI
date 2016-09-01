@@ -6,7 +6,7 @@ import Footer from './Footer/Footer';
 import Auth from './Auth/Auth';
 import '../style/vendor.scss';
 import './Shell.scss';
-import { login } from '../redux/auth';
+import { login, logout } from '../redux/auth';
 
 /*
  * React-router's <Router> component renders <Route>'s
@@ -31,7 +31,11 @@ import { login } from '../redux/auth';
 
 class Shell extends Component {
   handleLoginClick(event) {
-    this.props.dispatch(login())
+    this.props.dispatch(login());
+  }
+
+  handleLogoutClick() {
+    this.props.dispatch(logout());
   }
 
   handleAuthModalClose(event) {
@@ -46,7 +50,9 @@ class Shell extends Component {
       <div className="shell">
         <Header user={auth.user}
                 isAuthenticating={auth.authenticating}
-                onLoginClick={::this.handleLoginClick}/>
+                onLoginClick={::this.handleLoginClick}
+                onLogoutClick={::this.handleLogoutClick}
+        />
         <main>
           {children}
         </main>
