@@ -61,6 +61,7 @@ class Shell extends Component {
           authUrl={`${window.__API_URL__}/auth/post_message`}
           modalAuthUrl={`${window.__API_URL__}/auth`}
           showModal={auth.showModal}
+          showErrorModal={auth.showErrorModal}
           onModalClose={::this.handleAuthModalClose} />
       </div>
     );

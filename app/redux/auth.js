@@ -10,6 +10,7 @@ export const AUTH_SHOW_MODAL = 'eqtv/auth/SHOW_MODAL';
 const initialState = {
   authenticating: false,
   showModal: false,
+  showErrorModal: false,
   user: null,
   accessToken: null
 };
@@ -19,7 +20,9 @@ export function reducer(state = initialState, action) {
     case AUTH_LOGIN_START:
       return {
         ...state,
-        authenticating: true
+        authenticating: true,
+        showModal: false,
+        showErrorModal: false
       };
     case AUTH_LOGIN_COMPLETE:
       return {
@@ -27,6 +30,11 @@ export function reducer(state = initialState, action) {
         authenticating: false,
         user: action.user,
         accessToken: action.token
+      };
+    case AUTH_LOGIN_ERROR:
+      return {
+        ...state,
+        showErrorModal: action.showErrorModal
       };
     case AUTH_LOGIN_CANCELLED:
     case AUTH_LOGOUT:
@@ -74,11 +82,21 @@ function showAuthModal(showModal) {
   };
 }
 
+function showAuthError(showErrorModal) {
+  return {
+    type: AUTH_LOGIN_ERROR,
+    showErrorModal
+  }
+}
+
 function initPostMessages(dispatch) {
   function handleEvent(e) {
     if (e.origin === axios.defaults.baseURL) {
       if (e.data === 'show_modal') {
         dispatch(showAuthModal(true));
+      } else if (e.data.error) {
+        dispatch(showAuthModal(false));
+        dispatch(showAuthError(true));
       } else if (e.data.user != null) {
         dispatch(setCurrentUser(e.data))
       }
@@ -116,6 +134,8 @@ export function logout() {
 
 export function cancelLogin() {
   return (dispatch) => {
+    dispatch(showAuthModal(false));
+    dispatch(showAuthError(false));
     dispatch(loginCancelled());
   };
 }

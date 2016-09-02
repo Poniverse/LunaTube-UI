@@ -18,6 +18,10 @@ defmodule LunaTube.AuthController do
     render conn, "post_message.html", %{user: lunatube_user, token: jwt, layout: false}
   end
 
+  def callback(conn, %{"error" => error, "error_description" => error_desc}) do
+    render conn, "post_message_error.html", %{error: error, error_desc: error_desc, layout: false}
+  end
+
   def post_message(conn, _params) do
     render conn, "iframe_container.html", %{layout: false}
   end
