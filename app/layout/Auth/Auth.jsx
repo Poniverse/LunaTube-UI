@@ -8,7 +8,10 @@ class Auth extends Component {
 
     return (
       <div>
-        <Modal show={showModal} onHide={onModalClose}>
+        <Modal show={showModal}
+               backdrop="static"
+               keyboard={false}
+               onHide={onModalClose}>
           <Modal.Header closeButton>
             <Modal.Title>Poniverse Auth</Modal.Title>
           </Modal.Header>

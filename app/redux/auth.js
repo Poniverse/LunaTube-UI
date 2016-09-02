@@ -2,6 +2,7 @@ import axios from 'axios'
 
 export const AUTH_LOGIN_START = 'eqtv/auth/LOGIN_START';
 export const AUTH_LOGIN_COMPLETE = 'eqtv/auth/LOGIN_COMPLETE';
+export const AUTH_LOGIN_CANCELLED = 'eqtv/auth/LOGIN_CANCELLED';
 export const AUTH_LOGIN_ERROR = 'eqtv/auth/LOGIN_ERROR';
 export const AUTH_LOGOUT = 'eqtv/auth/LOGOUT';
 export const AUTH_SHOW_MODAL = 'eqtv/auth/SHOW_MODAL';
@@ -27,6 +28,7 @@ export function reducer(state = initialState, action) {
         user: action.user,
         accessToken: action.token
       };
+    case AUTH_LOGIN_CANCELLED:
     case AUTH_LOGOUT:
       return initialState;
     case AUTH_SHOW_MODAL:
@@ -50,6 +52,12 @@ function loginComplete(user, token) {
     type: AUTH_LOGIN_COMPLETE,
     user,
     token
+  };
+}
+
+function loginCancelled() {
+  return {
+    type: AUTH_LOGIN_CANCELLED
   };
 }
 
@@ -103,5 +111,11 @@ export function logout() {
     sessionStorage.removeItem('token');
 
     dispatch(logoutComplete());
+  };
+}
+
+export function cancelLogin() {
+  return (dispatch) => {
+    dispatch(loginCancelled());
   };
 }

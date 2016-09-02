@@ -6,7 +6,7 @@ import Footer from './Footer/Footer';
 import Auth from './Auth/Auth';
 import '../style/vendor.scss';
 import './Shell.scss';
-import { login, logout } from '../redux/auth';
+import { login, logout, cancelLogin } from '../redux/auth';
 
 /*
  * React-router's <Router> component renders <Route>'s
@@ -38,9 +38,8 @@ class Shell extends Component {
     this.props.dispatch(logout());
   }
 
-  handleAuthModalClose(event) {
-    // const { dispatch } = this.props;
-    // dispatch(finishAuth());
+  handleAuthModalClose() {
+    this.props.dispatch(cancelLogin());
   }
 
   render() {
