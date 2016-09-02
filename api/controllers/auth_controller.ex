@@ -18,7 +18,15 @@ defmodule LunaTube.AuthController do
     render conn, "post_message.html", %{user: lunatube_user, token: jwt, layout: false}
   end
 
-  defp authorize_url!(), do: Poniverse.authorize_url!
+  def post_message(conn, _params) do
+    render conn, "iframe_container.html", %{layout: false}
+  end
+
+  def post_message_iframe(conn, _params) do
+    redirect conn, external: authorize_url!()
+  end
+
+  defp authorize_url!(), do: Poniverse.authorize_url!()
   defp get_token!(code), do: Poniverse.get_token!(code: code)
 
   defp get_user!(token) do

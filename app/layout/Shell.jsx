@@ -59,7 +59,8 @@ class Shell extends Component {
         <Footer />
         <Auth
           isAuthenticating={auth.authenticating}
-          authUrl="/auth/redirect"
+          authUrl={`${window.__API_URL__}/auth/post_message`}
+          modalAuthUrl={`${window.__API_URL__}/auth`}
           showModal={auth.showModal}
           onModalClose={::this.handleAuthModalClose} />
       </div>

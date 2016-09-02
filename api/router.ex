@@ -13,5 +13,8 @@ defmodule LunaTube.Router do
     get "/auth", AuthController, :index
     get "/auth/callback", AuthController, :callback
 
+    get "/auth/post_message", AuthController, :post_message
+    get "/auth/post_message/iframe", AuthController, :post_message_iframe
+
   end
 end

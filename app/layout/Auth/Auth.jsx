@@ -4,7 +4,7 @@ import './Auth.scss';
 
 class Auth extends Component {
   render() {
-    const { showModal, authUrl, onModalClose } = this.props;
+    const { showModal, modalAuthUrl, onModalClose } = this.props;
 
     return (
       <div>
@@ -13,7 +13,7 @@ class Auth extends Component {
             <Modal.Title>Poniverse Auth</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <iframe src={authUrl} width="100%" height="550px" frameBorder="0" scrolling="no" className="poniverse-iframe"></iframe>
+            <iframe src={modalAuthUrl} width="100%" height="550px" frameBorder="0" scrolling="no" className="poniverse-iframe"></iframe>
           </Modal.Body>
         </Modal>
         {this.renderIframe()}
@@ -35,6 +35,7 @@ class Auth extends Component {
 Auth.propTypes = {
   isAuthenticating: PropTypes.bool.isRequired,
   authUrl: PropTypes.string.isRequired,
+  modalAuthUrl: PropTypes.string,
   showModal: PropTypes.bool.isRequired,
   onModalClose: PropTypes.func.isRequired,
 };

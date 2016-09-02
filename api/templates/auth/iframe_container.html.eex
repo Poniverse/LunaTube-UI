@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html><body><script>
+var url = window.location.pathname + '/iframe' + window.location.search;
+
+function createIframe(timeoutValue) {
+  var iframe = document.createElement('iframe');
+  iframe.src = url;
+  timeout(timeoutValue, done, showAuthModal);
+  window.document.body.appendChild(iframe);
+}
+
+function showAuthModal() {
+  tellEveryone('show_modal');
+}
+
+function tellEveryone(msg, win) {
+  if(win == undefined) win = window;
+  win.postMessage(msg, '*');
+  if(win.parent != win) tellEveryone(msg, win.parent);
+  if(win.opener) tellEveryone(msg, win.opener);
+}
+
+function done() {
+  // We're done here
+}
+
+function timeout(time, yes, no) {
+  var timeout = setTimeout(no, time);
+  onSuccess(function() {
+    clearTimeout(timeout);
+    yes();
+  });
+}
+
+function onSuccess(callback) {
+  succeeded ? callback() : callbacks.push(callback)
+}
+
+var callbacks = [];
+var succeeded = false;
+
+window.addEventListener('message', function(event) {
+  if(event.data === 'done') {
+    succeeded = true;
+    for(var i = 0; i < callbacks.length; i++) {
+      (callbacks[i])();
+    }
+  }
+});
+
+createIframe(5000); // 5 seconds should be enough time for the handshake to take place
+</script>
+</body>
+</html>

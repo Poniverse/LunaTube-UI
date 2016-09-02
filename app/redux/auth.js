@@ -70,7 +70,7 @@ function initPostMessages(dispatch) {
   function handleEvent(e) {
     if (e.origin === axios.defaults.baseURL) {
       if (e.data === 'show_modal') {
-        dispatch(showAuthModal());
+        dispatch(showAuthModal(true));
       } else if (e.data.user != null) {
         dispatch(setCurrentUser(e.data))
       }
@@ -85,6 +85,7 @@ function setCurrentUser({user, token}) {
     // TODO: Send a login request / connect to the web socket
     localStorage.setItem('token', token);
     sessionStorage.setItem('token', token);
+    dispatch(showAuthModal(false));
     dispatch(loginComplete(user, token));
   };
 }
