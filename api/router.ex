@@ -3,6 +3,9 @@ defmodule LunaTube.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+
+    plug Guardian.Plug.VerifyHeader, realm: "Bearer"
+    plug Guardian.Plug.LoadResource
   end
 
   scope "/", LunaTube do
@@ -15,6 +18,8 @@ defmodule LunaTube.Router do
 
     get "/auth/post_message", AuthController, :post_message
     get "/auth/post_message/iframe", AuthController, :post_message_iframe
+
+    delete "/auth", AuthController, :logout
 
   end
 end

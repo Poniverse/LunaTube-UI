@@ -22,6 +22,16 @@ defmodule LunaTube.AuthController do
     render conn, "post_message_error.html", %{error: error, error_desc: error_desc, layout: false}
   end
 
+  def logout(conn, _params) do
+    {:ok, claims} = Guardian.Plug.claims(conn)
+
+    conn
+    |> Guardian.Plug.current_token
+    |> Guardian.revoke!(claims)
+
+    json conn, %{ok: true}
+  end
+
   def post_message(conn, _params) do
     render conn, "iframe_container.html", %{layout: false}
   end

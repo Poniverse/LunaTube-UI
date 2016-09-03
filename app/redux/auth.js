@@ -125,10 +125,18 @@ export function login() {
 
 export function logout() {
   return (dispatch) => {
-    localStorage.removeItem('token');
-    sessionStorage.removeItem('token');
+    axios.delete('/auth')
+      .then(() => {
+        delete axios.defaults.headers.common['Authorization'];
 
-    dispatch(logoutComplete());
+        localStorage.removeItem('token');
+        sessionStorage.removeItem('token');
+
+        dispatch(logoutComplete());
+      })
+      .catch((res) => {
+        console.log(res.data);
+      });
   };
 }
 
