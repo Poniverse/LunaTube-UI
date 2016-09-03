@@ -28,6 +28,8 @@ defmodule LunaTube.Endpoint do
   plug Plug.MethodOverride
   plug Plug.Head
 
+  plug CORSPlug
+
   plug Plug.Session,
     store: :cookie,
     key: "_lunatube_key",
