@@ -50,7 +50,7 @@ class Shell extends Component {
     const { auth, actions } = this.props;
 
     return (
-      <Modal show={auth.showAuthModal} onHide={actions.finishAuth} onEnter={::this.handleOnEnter}>
+      <Modal show={auth.showAuthModal} onHide={actions.finishAuth}>
         <Modal.Header closeButton>
           <Modal.Title>Poniverse Auth</Modal.Title>
         </Modal.Header>
@@ -64,18 +64,10 @@ class Shell extends Component {
     )
   }
 
-  handleOnEnter() {
-    const { actions } = this.props;
-
-    console.log("Added event listener");
-  }
-
   handleWindowMessage(event) {
     const { actions } = this.props;
     const origin = event.origin || event.originalEvent.origin; // For Chrome, the origin property is in the event.originalEvent object.
     const currentOrigin = window.location.protocol + '//' + window.location.hostname + (window.location.port ? ':' + window.location.port : '');
-
-    console.log(origin, currentOrigin, event.data);
 
     if (origin !== currentOrigin) {
       return;
