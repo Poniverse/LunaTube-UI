@@ -3407,7 +3407,7 @@ karma@^0.13.22:
     source-map "^0.5.3"
     useragent "^2.1.6"
 
-keycode@^2.1.1:
+keycode@^2.1.1, keycode@^2.1.2:
   version "2.1.7"
   resolved "https://registry.yarnpkg.com/keycode/-/keycode-2.1.7.tgz#7b9255919f6cff562b09a064d222dca70b020f5c"
 
@@ -4769,7 +4769,21 @@ react-addons-test-utils@^15.0.2:
   version "15.4.1"
   resolved "https://registry.yarnpkg.com/react-addons-test-utils/-/react-addons-test-utils-15.4.1.tgz#1e4caab151bf27cce26df5f9cb714f4fd8359ae1"
 
-react-bootstrap@^0.29.4, react-bootstrap@^0.29.5:
+react-bootstrap:
+  version "0.30.7"
+  resolved "https://registry.yarnpkg.com/react-bootstrap/-/react-bootstrap-0.30.7.tgz#39da80088693ecb71e8e63b5bdc313571fd993d1"
+  dependencies:
+    babel-runtime "^6.11.6"
+    classnames "^2.2.5"
+    dom-helpers "^2.4.0"
+    invariant "^2.2.1"
+    keycode "^2.1.2"
+    react-overlays "^0.6.10"
+    react-prop-types "^0.4.0"
+    uncontrollable "^4.0.1"
+    warning "^3.0.0"
+
+react-bootstrap@^0.29.5:
   version "0.29.5"
   resolved "https://registry.yarnpkg.com/react-bootstrap/-/react-bootstrap-0.29.5.tgz#0c6f7a7d06834b0db85a18ccddc04b129c5f2058"
   dependencies:
@@ -4828,7 +4842,7 @@ react-loader@^2.0.0:
   dependencies:
     spin.js "2.x"
 
-react-overlays@^0.6.3:
+react-overlays, react-overlays@^0.6.10, react-overlays@^0.6.3:
   version "0.6.10"
   resolved "https://registry.yarnpkg.com/react-overlays/-/react-overlays-0.6.10.tgz#e7e52dad47f00a0fc784eb044428c3a9e874bfa3"
   dependencies:
@@ -5892,6 +5906,12 @@ ultron@1.0.x:
 uncontrollable@^3.2.3:
   version "3.3.1"
   resolved "https://registry.yarnpkg.com/uncontrollable/-/uncontrollable-3.3.1.tgz#e23b402e7a4c69b1853fb4b43ce34b6480c65b6f"
+  dependencies:
+    invariant "^2.1.0"
+
+uncontrollable@^4.0.1:
+  version "4.0.3"
+  resolved "https://registry.yarnpkg.com/uncontrollable/-/uncontrollable-4.0.3.tgz#06ec76cb9e02914756085d9cea0354fc746b09b4"
   dependencies:
     invariant "^2.1.0"
 

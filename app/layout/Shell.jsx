@@ -18,7 +18,7 @@ import { startAuth, finishAuth, storeAuthAndUser } from '../redux/auth';
  * https://github.com/rackt/react-router/blob/latest/docs/Introduction.md
  */
 class Shell extends Component {
-  propTypes = {
+  static propTypes = {
     auth: PropTypes.object.isRequired,
     children: PropTypes.object
   };

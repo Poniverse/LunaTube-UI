@@ -10,7 +10,7 @@ import NavbarCollapse from 'react-bootstrap/lib/NavbarCollapse';
 import NavbarToggle from 'react-bootstrap/lib/NavbarToggle';
 
 class Header extends Component {
-  propTypes = {
+  static propTypes = {
     user: PropTypes.object,
     onLoginClick: PropTypes.func
   };
