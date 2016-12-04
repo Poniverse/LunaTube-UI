@@ -1,5 +1,5 @@
-import axios from 'axios';
-import {getOAuthData, storeOAuthData, getAccessToken} from "../helpers/oauth";
+import axios from "axios";
+import {getOAuthData, storeAuthData, getAccessToken} from "../helpers/auth";
 
 
 export function redirectToPoniverse(req, res) {
@@ -25,25 +25,21 @@ export function authenticate(req, res) {
     res.status(400).send({error: "No code provided"});
   }
 
-  getAccessToken(data)
+  axios.post('/auth/poniverse', {
+    code: data.code
+  })
     .then(response => {
-      storeOAuthData(res, response.data);
+      const json = JSON.stringify(response.data);
 
-      axios
-        .get('https://api.poniverse.net/v1/users/me', null, {
-          headers: {
-            Authorization: "Bearer " + response.data.access_token
-          }
-        })
-        .then(userRes => {
-          res.status(200).send({
-            access_token: response.data.access_token,
-            user: userRes.data
-          });
-        })
-        .catch(error => {
-          res.status(error.status).send(error.data);
-        });
+      res.status(200).send(`
+<html>
+<body>
+<script>
+  parent.postMessage(${json}, "${process.env.APP_URL}");
+</script>
+</body>
+</html>
+`);
     })
     .catch(error => {
       res.status(error.status).send(error.data);
@@ -51,7 +47,7 @@ export function authenticate(req, res) {
 }
 
 export function refresh(req, res) {
-  const {refresh_token} = getOAuthData(req);
+  const {refresh_token} = getAuthData(req);
 
   if (!refresh_token) {
     return res.status(401).send();
@@ -64,15 +60,13 @@ export function refresh(req, res) {
 
   getAccessToken(data)
     .then(response => {
-      storeOAuthData(res, response.data);
+      storeAuthData(res, response.data);
 
-      res.status(200).send({
-        access_token: response.data.access_token
-      });
+      res.status(200).send(response.data);
     })
     .catch(error => {
       // Clear cookies on error, there's nothing helpful in them now.
-      res.cookie('oauth-secrets', '', {maxAge: -1, httpOnly: true});
+      res.cookie('auth-secrets', '', {maxAge: -1, httpOnly: true});
 
       console.error(error);
       res.status(error.status).send(res.data);
@@ -80,7 +74,7 @@ export function refresh(req, res) {
 }
 
 export function logout(req, res) {
-  res.cookie('oauth-secrets', '', {maxAge: -1, httpOnly: true});
+  res.cookie('auth-secrets', '', {maxAge: -1, httpOnly: true});
 
   res.status(204).send();
 }

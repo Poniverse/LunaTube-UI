@@ -14,9 +14,6 @@ const clientConfig = {
   port: process.env.PORT || '3000'
 };
 
-// configure baseURL for axios requests (for serverside API calls)
-axios.defaults.baseURL = process.env.API_URL || `http://${clientConfig.host}:${clientConfig.port}`;
-
 /*
  * Our html template file
  * @param {String} renderedContent

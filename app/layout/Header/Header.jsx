@@ -46,7 +46,7 @@ class Header extends Component {
   renderLoggedIn(user) {
     return (
       <Nav pullRight>
-        <NavItem eventKey={1}>Welcome, {user.username}</NavItem>
+        <NavItem eventKey={1}>Welcome, {user.name}</NavItem>
       </Nav>
     );
   }

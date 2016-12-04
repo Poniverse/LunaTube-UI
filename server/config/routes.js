@@ -1,8 +1,8 @@
-import * as OAuthController from "../controllers/OAuthController";
+import * as AuthController from "../controllers/AuthController";
 
 export default (app) => {
-  app.get('/auth/redirect', OAuthController.redirectToPoniverse);
-  app.get('/auth/oauth', OAuthController.authenticate);
-  app.post('/auth/refresh', OAuthController.refresh);
-  app.post('/auth/logout', OAuthController.logout);
+  app.get('/auth/redirect', AuthController.redirectToPoniverse);
+  app.get('/auth/oauth', AuthController.authenticate);
+  // app.post('/auth/refresh', AuthController.refresh); TODO: This
+  app.post('/auth/logout', AuthController.logout);
 };

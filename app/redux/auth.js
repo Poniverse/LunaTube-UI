@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 export const SET_USER = 'eqtv/auth/SET_USER';
 export const START_AUTH = 'eqtv/auth/START_AUTH';
 export const FINISH_AUTH = 'eqtv/auth/FINISH_AUTH';
@@ -38,6 +40,12 @@ export function finishAuth() {
   return {
     type: FINISH_AUTH
   }
+}
+
+export function storeAuthAndUser({user, jwt, exp}) {
+  axios.defaults.headers.common.Authorization = 'Bearer ' + jwt;
+
+  return setUser(user);
 }
 
 export function setUser(user) {

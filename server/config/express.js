@@ -4,6 +4,7 @@ import path from 'path';
 import methodOverride from 'method-override';
 // import cookieParser from 'cookie-parser';
 import dotenv from 'dotenv-safe';
+import axios from 'axios';
 
 dotenv.load();
 
@@ -35,6 +36,9 @@ export default (app) => {
     // The trust proxy setting is implemented using the proxy-addr package. For more information, see its documentation.
     // loopback - 127.0.0.1/8, ::1/128
     app.set('trust proxy', 'loopback');
+
+    // configure baseURL for axios requests (for serverside API calls)
+    axios.defaults.baseURL = process.env.API_URL || `http://${clientConfig.host}:${clientConfig.port}`;
 
     var node_env = process.env.NODE_ENV;
     console.log('--------------------------');

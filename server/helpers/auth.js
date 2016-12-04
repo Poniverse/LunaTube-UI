@@ -17,20 +17,21 @@ export function getAccessToken(data) {
     .post('https://poniverse.net/oauth/access_token', requestData);
 }
 
-export function storeOAuthData(res, {access_token, refresh_token}) {
-  axios.defaults.headers.common.Authorization = 'Bearer ' + access_token;
+export function storeAuthData(res, {user, jwt, exp}) {
+  axios.defaults.headers.common.Authorization = 'Bearer ' + jwt;
 
   const cookieValue = JSON.stringify({
-    access_token,
-    refresh_token
+    user,
+    jwt,
+    exp
   });
 
   res.cookie('oauth-secrets', encrypt(cookieValue), {maxAge: 900000, httpOnly: true});
 }
 
-export function getOAuthData(req) {
+export function getAuthData(req) {
   try {
-    return JSON.parse(decrypt(req.cookies['oauth-secrets']));
+    return JSON.parse(decrypt(req.cookies['auth-secrets']));
   } catch (e) {
     console.log('Invalid cookie data');
     // Invalid cookie ciphertext
