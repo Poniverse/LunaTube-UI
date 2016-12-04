@@ -71,10 +71,7 @@ module.exports = {
     extensions: ['', '.js', '.jsx', '.scss'],
     modulesDirectories: [
       'app', 'node_modules'
-    ],
-    alias: {
-      phoenix: path.join(__dirname, '..', 'deps', 'phoenix', 'web', 'static', 'js', 'phoenix.js')
-    }
+    ]
   },
 
   postcss: [autoprefixer],
