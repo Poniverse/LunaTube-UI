@@ -88,7 +88,7 @@ $ yarn test
 ## Credits
 
 [Vortigern](https://github.com/barbar/vortigern), the base project we used for this, is released under the [MIT license](https://github.com/barbar/vortigern/blob/develop/LICENSE). 
-=======
+
 # LunaTube
 
 To start LunaTube:
