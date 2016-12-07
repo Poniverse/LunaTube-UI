@@ -9,8 +9,8 @@ export default {
   // This part goes to React-Helmet for Head of our HTML
   app: {
     head: {
-      title: 'barbar-vortigern',
-      titleTemplate: 'barbar-vortigern: %s',
+      title: 'Equestria.tv',
+      titleTemplate: 'Equestria.tv | %s',
       meta: [
         { charset: 'utf-8' },
         { 'http-equiv': 'x-ua-compatible', content: 'ie=edge' },
