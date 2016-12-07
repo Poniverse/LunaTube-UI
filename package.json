@@ -1,7 +1,13 @@
 {
-  "name": "vortigern",
-  "version": "0.1.0",
-  "description": "A universal boilerplate for building web applications w/ TypeScript, React, Redux and more.",
+  "name": "LunaTube",
+  "version": "1.0.0",
+  "description": "Magical Ponies on TV",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Poniverse/LunaTube-UI.git"
+  },
+  "author": "Poniverse",
+  "license": "Apache-2.0",
   "main": "build/server.js",
   "scripts": {
     "clean": "rimraf build",
@@ -15,7 +21,6 @@
     "test": "node_modules/.bin/karma start config/test/karma.conf.js",
     "lint": "node_modules/.bin/tslint \"src/**/**.ts*\""
   },
-  "author": "Barbar Startup Factory <hey@barbar.com.tr>",
   "contributors": [
     {
       "name": "Altay Aydemir",
@@ -33,31 +38,10 @@
       "url": "http://ufukomer.com/"
     }
   ],
-  "homepage": "https://github.com/barbar/vortigern.git",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/barbar/vortigern.git"
-  },
+  "homepage": "https://github.com/Poniverse/LunaTube-UI.git",
   "bugs": {
-    "url": "https://github.com/barbar/vortigern/issues"
+    "url": "https://github.com/Poniverse/LunaTube-UI/issues"
   },
-  "keywords": [
-    "react",
-    "redux",
-    "typescript",
-    "webpack",
-    "universal",
-    "isomorphic",
-    "starter",
-    "kit",
-    "boilerplate",
-    "hot reload",
-    "react-hot-loader",
-    "enzyme",
-    "mocha",
-    "chai"
-  ],
-  "license": "MIT",
   "devDependencies": {
     "@types/base16": "^1.0.1",
     "@types/chai": "^3.4.34",
