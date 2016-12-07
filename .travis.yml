@@ -4,13 +4,14 @@ node_js:
 env:
   - NODE_ENV=ci
 cache:
+  yarn: true
   directories:
   - node_modules
 install:
-  - npm install
+  - yarn install
 before_script:
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
 script:
-  - npm run build
-  - npm test
+  - yarn run build
+  - yarn test
