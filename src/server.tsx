@@ -1,3 +1,5 @@
+require('dotenv-safe').load();
+
 import appConfig from '../config/main';
 
 import * as e6p from 'es6-promise';
@@ -55,40 +57,12 @@ app.use(favicon(path.join(__dirname, '../src/favicon.ico')));
 
 app.use('/public', express.static(path.join(__dirname, '../build/public')));
 
-app.get('*', (req, res) => {
-  const location = req.url;
-  const memoryHistory = createMemoryHistory(req.originalUrl);
-  const store = configureStore(memoryHistory);
-  const history = syncHistoryWithStore(memoryHistory, store);
-
-  match({ history, routes, location },
-    (error, redirectLocation, renderProps) => {
-      if (error) {
-        res.status(500).send(error.message);
-      } else if (redirectLocation) {
-        res.redirect(302, redirectLocation.pathname + redirectLocation.search);
-      } else if (renderProps) {
-        const asyncRenderData = Object.assign({}, renderProps, { store });
-
-        loadOnServer(asyncRenderData).then(() => {
-          const markup = ReactDOMServer.renderToString(
-            <Provider store={store} key="provider">
-              <ReduxAsyncConnect {...renderProps} />
-            </Provider>
-          );
-          res.status(200).send(renderHTML(markup, store));
-        });
-      } else {
-        res.status(404).send('Not Found?');
-      }
-    });
-});
-
 app.get('/auth/redirect', (req, res) => {
+
   const queryString = [
     'response_type=code',
-    'client_id=' + process.env.PONIVERSE_CLIENT_ID,
-    'redirect_uri=http://localhost:3000/auth/oauth',
+    'client_id=' + appConfig.poniverseClientId,
+    'redirect_uri=' + appConfig.poniverseRedirectUri,
   ];
 
   res.redirect('https://poniverse.net/oauth/authorize?' + queryString.join('&'));
@@ -116,7 +90,7 @@ app.get('/auth/oauth', (req, res) => {
 <html>
 <body>
 <script>
-  parent.postMessage(${json}, "${process.env.APP_URL}");
+  parent.postMessage(${json}, "${appConfig.appUrl}");
 </script>
 </body>
 </html>
@@ -131,6 +105,35 @@ app.post('/auth/logout', (req, res) => {
   res.cookie('auth-secrets', '', {maxAge: -1, httpOnly: true});
 
   res.status(204).send();
+});
+
+app.get('*', (req, res) => {
+  const location = req.url;
+  const memoryHistory = createMemoryHistory(req.originalUrl);
+  const store = configureStore(memoryHistory);
+  const history = syncHistoryWithStore(memoryHistory, store);
+
+  match({ history, routes, location },
+    (error, redirectLocation, renderProps) => {
+      if (error) {
+        res.status(500).send(error.message);
+      } else if (redirectLocation) {
+        res.redirect(302, redirectLocation.pathname + redirectLocation.search);
+      } else if (renderProps) {
+        const asyncRenderData = Object.assign({}, renderProps, { store });
+
+        loadOnServer(asyncRenderData).then(() => {
+          const markup = ReactDOMServer.renderToString(
+            <Provider store={store} key="provider">
+              <ReduxAsyncConnect {...renderProps} />
+            </Provider>
+          );
+          res.status(200).send(renderHTML(markup, store));
+        });
+      } else {
+        res.status(404).send('Not Found?');
+      }
+    });
 });
 
 app.listen(appConfig.port, appConfig.host, err => {

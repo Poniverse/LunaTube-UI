@@ -21,6 +21,10 @@ class Html extends React.Component<IHtmlProps, {}> {
     const { markup, store } = this.props;
 
     const styles = this.resolve(['vendor.css', 'app.css']);
+
+    // TODO: Remind me to remove this and actually require it...
+    styles.push('//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css');
+
     const renderStyles = styles.map((src, i) =>
       <link key={i} rel="stylesheet" type="text/css" href={src} />
     );

@@ -7,7 +7,6 @@ class Home extends React.Component<any, any> {
       <div className={s.home}>
         <img src={require('./logo.svg')} />
         <p>Equestria.tv!</p>
-        <p>The almost ready to be built application!</p>
       </div>
     );
   }
