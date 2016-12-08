@@ -1,6 +1,6 @@
 import {  expect } from 'chai';
 import * as user from './';
-import { IUserState, IUserAction, IUser } from '../../../models/User';
+import { IUserState, IUserAction, IUser } from '../../../models/user';
 
 describe('User Module', () => {
   describe('Actions', () => {
