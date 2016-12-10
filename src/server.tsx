@@ -14,6 +14,7 @@ import { createMemoryHistory, match } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
 const { ReduxAsyncConnect, loadOnServer } = require('redux-connect');
 import { configureStore } from './app/redux/store';
+import { setUser } from './app/redux/modules/user';
 import routes from './app/routes';
 import axios from 'axios';
 
@@ -23,16 +24,18 @@ const manifest = require('../build/manifest.json');
 const express = require('express');
 const path = require('path');
 const compression = require('compression');
+const cookieParser = require('cookie-parser');
 const Chalk = require('chalk');
 const favicon = require('serve-favicon');
 
-import { storeAuthData } from './app/helpers/AuthHelpers';
+import { storeAuthData, getAuthData } from './app/helpers/AuthHelpers';
 
 axios.defaults.baseURL = appConfig.apiUrl;
 
 const app = express();
 
 app.use(compression());
+app.use(cookieParser('auth-secrets'));
 
 if (process.env.NODE_ENV !== 'production') {
   const webpack = require('webpack');
@@ -112,6 +115,12 @@ app.get('*', (req, res) => {
   const memoryHistory = createMemoryHistory(req.originalUrl);
   const store = configureStore(memoryHistory);
   const history = syncHistoryWithStore(memoryHistory, store);
+
+  const authData = getAuthData(req);
+
+  if (authData) {
+    store.dispatch(setUser(authData.user));
+  }
 
   match({ history, routes, location },
     (error, redirectLocation, renderProps) => {

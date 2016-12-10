@@ -127,6 +127,7 @@
   "dependencies": {
     "axios": "^0.15.3",
     "classnames": "^2.2.5",
+    "cookie-parser": "^1.4.3",
     "dotenv": "^2.0.0",
     "dotenv-safe": "^3.0.0",
     "es6-promise": "^4.0.5",

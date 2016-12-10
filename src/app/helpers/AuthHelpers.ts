@@ -10,7 +10,7 @@ export function storeAuthData(res, {user, jwt, exp}) {
     exp,
   });
 
-  res.cookie('oauth-secrets', encrypt(cookieValue), {maxAge: 900000, httpOnly: true});
+  res.cookie('auth-secrets', encrypt(cookieValue), {maxAge: 900000, httpOnly: true});
 }
 
 export function getAuthData(req) {
