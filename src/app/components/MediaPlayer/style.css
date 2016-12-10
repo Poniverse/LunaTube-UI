@@ -1,0 +1,61 @@
+:root {
+  --green: #98D61E;
+  --white: #FFFFFF;
+  --black: #000000;
+}
+
+.player-container {
+  position: relative;
+  background: var(--black);
+
+  &.fullscreen {
+    width: 100%;
+    height: 100%;
+
+    &.hide-mouse {
+      cursor: none !important;
+    }
+
+    & .player {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 100%;
+    }
+  }
+
+  & .player {
+    &.native-video > video {
+      display: block;
+      width: 100% !important;
+      height: auto !important;
+    }
+
+    &.youtube,
+    &.unsupported,
+    &.native-audio {
+      position: relative;
+      padding-bottom: 56.25%; /* 16:9 */
+      padding-top: 25px;
+      height: 0;
+
+      & iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+      }
+    }
+
+    &.native-audio {
+      background: url(https://poniverse.net/img/ponies/fm_pony.svg) center no-repeat;
+
+    }
+
+    &.unsupported {
+      color: var(--white);
+      text-align: center;
+    }
+  }
+}

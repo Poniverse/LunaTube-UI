@@ -1,5 +1,7 @@
+import { PlayerState } from './player';
+
 export type VideoSource = 'youtube' | 'native_video' | 'native_audio';
-export type PlayerState = 'playing' | 'paused' | 'loading' | 'stopped';
+export { PlayerState };
 
 export interface IRoom {
   id: string;
@@ -7,8 +9,9 @@ export interface IRoom {
   volume: number;
   syncTime: number;
   video: {
-    url: string,
-    source: VideoSource
+    url: string;
+    source: VideoSource;
+    duration: number;
   };
 }
 
@@ -19,8 +22,9 @@ export interface IRoomAction {
     volume?: number,
     state?: PlayerState,
     video?: {
-      source: VideoSource,
-      url: string,
+      source?: VideoSource,
+      url?: string,
+      duration?: number,
     }
   };
 }

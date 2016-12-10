@@ -15,8 +15,4 @@ describe('<Home />', () => {
     expect(component.find('img')).to.exist;
   });
 
-  it('Has a p element that says Equestria.tv!', () => {
-    expect(component.find('p').first().text()).eql('Equestria.tv!');
-  });
-
 });

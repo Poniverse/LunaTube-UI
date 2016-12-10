@@ -24,6 +24,7 @@ class Html extends React.Component<IHtmlProps, {}> {
 
     // TODO: Remind me to remove this and actually require it...
     styles.push('//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css');
+    styles.push('//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
 
     const renderStyles = styles.map((src, i) =>
       <link key={i} rel="stylesheet" type="text/css" href={src} />

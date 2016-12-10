@@ -22,10 +22,11 @@ describe('Room Module', () => {
 
     describe('Set Video', () => {
       it('has the correct type and video information', () => {
-        const action: IRoomAction = room.setVideo('youtube', 'https://youtube.com');
+        const action: IRoomAction = room.setVideo('youtube', '0elg9WVytMs', 226);
         expect(action.type).to.equal(room.SET_VIDEO);
         expect(action.payload.video.source).to.equal('youtube');
-        expect(action.payload.video.url).to.equal('https://youtube.com');
+        expect(action.payload.video.url).to.equal('0elg9WVytMs');
+        expect(action.payload.video.duration).to.equal(226);
       });
     });
 
@@ -44,11 +45,9 @@ describe('Room Module', () => {
         expect(action.payload.time).to.equal(120);
       });
     });
-
   });
 
   describe('Reducer', () => {
-
     let state: IRoom = {
         id: 'random-id',
         state: 'loading',
@@ -96,7 +95,8 @@ describe('Room Module', () => {
         payload: {
           video: {
             source: 'youtube',
-            url: 'https://youtube.com',
+            url: '0elg9WVytMs',
+            duration: 226,
           },
         },
       };
@@ -108,7 +108,8 @@ describe('Room Module', () => {
         syncTime: null,
         video: {
           source: 'youtube',
-          url: 'https://youtube.com',
+          url: '0elg9WVytMs',
+          duration: 226,
         },
       });
     });

@@ -47,7 +47,7 @@ export function play(): IRoomAction {
       state: 'playing',
     },
   };
-};
+}
 
 export function pause(): IRoomAction {
   return {
@@ -56,19 +56,20 @@ export function pause(): IRoomAction {
       state: 'paused',
     },
   };
-};
+}
 
-export function setVideo(source: VideoSource, url: string): IRoomAction {
+export function setVideo(source: VideoSource, url: string, duration: number): IRoomAction {
   return {
     type: SET_VIDEO,
     payload: {
       video: {
         source,
         url,
+        duration,
       },
     },
   };
-};
+}
 
 export function setVolume(volume: number): IRoomAction {
   return {
@@ -77,7 +78,7 @@ export function setVolume(volume: number): IRoomAction {
       volume,
     },
   };
-};
+}
 
 export function seekTime(time: number): IRoomAction {
   return {
@@ -86,4 +87,4 @@ export function seekTime(time: number): IRoomAction {
       time,
     },
   };
-};
+}

@@ -1,0 +1,141 @@
+:root {
+  --green: #98D61E;
+  --white: #FFFFFF;
+  --black: #000000;
+  --seekbar-active: var(--white);
+  --seekbar-background: rgba(255, 255, 255, 0.4);
+  --left-width: 160px;
+  --right-width: 32px;
+  --seekbar-height: 5px;
+  --margin-left: calc(var(--left-width) + 5px);
+  --margin-right: calc(var(--right-width) + 5px);
+}
+
+.control-bar {
+  position: absolute;
+  z-index: 2;
+  width: 100%;
+  height: 40px;
+  background: rgba(152, 214, 30, 0.8);
+  bottom: 0;
+  transition: opacity .5s;
+  color: var(--white);
+  opacity: 1;
+
+  &.hide-bar {
+    opacity: 0;
+  }
+}
+
+.left-controls {
+  float: left;
+  width: var(--left-width);
+}
+
+.right-controls {
+  float: right;
+  width: 32px;
+}
+
+.timestamp {
+  transition: opacity 0.3s linear;
+  opacity: 1;
+
+  &.hide-timestamp {
+    opacity: 0;
+  }
+}
+
+.volume-timestamp {
+  display: inline-block;
+  position: relative;
+}
+
+button, span {
+  display: inline-block;
+  padding: 11px 10px 9px;
+}
+
+button {
+  background: none;
+  border: 0;
+  outline: none;
+}
+
+button + span {
+  margin-left: -10px;
+}
+
+.volume > .fa {
+  min-width: 15px;
+}
+
+/* TODO: This should probably be a font somewhere */
+.play {
+  margin: 0 4px;
+  background: url('./play.svg') no-repeat center center;
+  background-size: 14px 16px;
+}
+
+.seekbar {
+  border-radius: 5px;
+  position: relative;
+  background-color: var(--seekbar-background);
+  color: white;
+  height: var(--seekbar-height);
+  margin: 0 var(--margin-right) 0 var(--margin-left);
+  top: 50%;
+  transform: translateY(-40%);
+  transition: width 0.3s linear;
+
+  &.volume {
+    position: absolute;
+    margin: 0;
+    right: 13px;
+    width: 80px;
+    transition: visibility 0s, opacity 0.3s linear;
+    opacity: 1;
+    visibility: visible;
+  }
+
+  &.hide-volume {
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  & .seekbar-progress {
+    border-radius: 5px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: var(--seekbar-height);
+    background-color: var(--seekbar-active);
+    transition: width 0.2s;
+  }
+
+  & .seekbar-progress:after {
+    content: " ";
+    position: absolute;
+    height: calc(var(--seekbar-height) + 5px);
+    width: calc(var(--seekbar-height) + 5px);
+    background-color: white;
+    border-radius: 5px;
+    color: black;
+    right: -5px;
+    top: -3px;
+    transition: all 0.2s;
+    opacity: 1;
+  }
+
+  &:hover .seekbar-progress:after {
+    opacity: 1;
+  }
+
+  & input[type="range"] {
+    width: 100%;
+    position: absolute;
+    top: -5px;
+    opacity: 0;
+    cursor: pointer;
+  }
+}
