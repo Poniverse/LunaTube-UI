@@ -151,7 +151,7 @@ class ControlBar extends React.Component<IProps, IState> {
 
     return (
       <div className={cx(classes)}>
-        <div className={cx('right-controls pull-right')}>
+        <div className={cx('right-controls pull-right hidden')}>
           <button onClick={onToggleFullscreen}>
             <i className={isFullscreen ? 'fa fa-compress' : 'fa fa-expand'} />
           </button>
@@ -170,10 +170,12 @@ class ControlBar extends React.Component<IProps, IState> {
             >
               <i className={volumeIconClasses} />
             </button>
+
             <span className={cx({timestamp: true, 'hide-timestamp': this.state.showVolume})}>
               {this.formatTime(currentTime > -1 ? currentTime : 0)} /
               { duration !== Infinity ? this.formatTime(duration) : 'LIVE' }
             </span>
+
             <div className={cx({seekbar: true, volume: true, 'hide-volume': !this.state.showVolume})}>
               <div className={cx('seekbar-progress')} style={{width:volume + '%'}} />
               <input type="range" min="0.0" max="100" step="5"
