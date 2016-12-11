@@ -42,7 +42,7 @@ class Home extends React.Component<IProps, any> {
     setVideo(
       SOURCE_YOUTUBE,
       'Qi69aTLYF8E',
-      226
+      246
     );
 
     // setVideo(
