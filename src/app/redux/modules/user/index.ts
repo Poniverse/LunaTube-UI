@@ -1,4 +1,5 @@
 import { IUserState, IUserAction, IUser } from '../../../models/user';
+import axios from 'axios';
 
 export const SET_USER = 'user/SET_USER';
 export const START_AUTH = 'user/START_AUTH';
@@ -56,9 +57,19 @@ export function finishAuth(): IUserAction {
   };
 }
 
-export function logout(): IUserAction {
-  return {
-    type: LOGOUT,
+export function logout() {
+  return dispatch => {
+    axios
+      .post('/auth/logout', {}, {
+        baseURL: '', // This request is being made to the local node server
+      })
+      .then(response => {
+        const action: IUserAction = {
+          type: LOGOUT,
+        };
+
+        dispatch(action);
+      });
   };
 }
 

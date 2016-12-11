@@ -56,7 +56,7 @@ class AuthModal extends React.Component<IProps, any> {
       return;
     }
 
-    onAuthComplete(event.data.user);
+    onAuthComplete(event.data);
   }
 }
 

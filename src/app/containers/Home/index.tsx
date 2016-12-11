@@ -97,9 +97,9 @@ class Home extends React.Component<IProps, any> {
   }
 
   public handleOnReady() {
-    const { play } = this.props;
+    // const { play } = this.props;
 
-    play();
+    // play();
   }
 
   public handleOnEnd() {

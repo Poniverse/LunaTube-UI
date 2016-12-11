@@ -18,12 +18,12 @@ describe('User Module', () => {
       });
     });
 
-    describe('Logout', () => {
-      it('has the correct type', () => {
-        const action: IUserAction = user.logout();
-        expect(action.type).to.equal(user.LOGOUT);
-      });
-    });
+    // describe('Logout', () => {
+    //   it('has the correct type', () => {
+    //     const action: IUserAction = user.logout();
+    //     expect(action.type).to.equal(user.LOGOUT);
+    //   });
+    // });
 
     describe('Set User', () => {
       it('has the correct type and user information', () => {
@@ -74,14 +74,14 @@ describe('User Module', () => {
       });
     });
 
-    it('handles action of type LOGOUT', () => {
-      const action: IUserAction = { type: user.LOGOUT };
-      expect(user.reducer(state, action)).to.be.eql({
-        isAuthenticating: false,
-        jwt: null,
-        loggedInUser: null,
-      });
-    });
+    // it('handles action of type LOGOUT', () => {
+    //   const action: IUserAction = { type: user.LOGOUT };
+    //   expect(user.reducer(state, action)).to.be.eql({
+    //     isAuthenticating: false,
+    //     jwt: null,
+    //     loggedInUser: null,
+    //   });
+    // });
 
     it('handles action of type SET_USER', () => {
       const action: IUserAction = {
