@@ -14,7 +14,7 @@ import { createMemoryHistory, match } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
 const { ReduxAsyncConnect, loadOnServer } = require('redux-connect');
 import { configureStore } from './app/redux/store';
-import { setUser } from './app/redux/modules/user';
+import {setUser, setJwt} from './app/redux/modules/user';
 import routes from './app/routes';
 import axios from 'axios';
 
@@ -119,7 +119,11 @@ app.get('*', (req, res) => {
   const authData = getAuthData(req);
 
   if (authData) {
+    console.log(authData);
+
     store.dispatch(setUser(authData.user));
+    store.dispatch(setJwt(authData.jwt));
+    axios.defaults.headers.common.Authorization = 'Bearer ' + authData.jwt;
   }
 
   match({ history, routes, location },

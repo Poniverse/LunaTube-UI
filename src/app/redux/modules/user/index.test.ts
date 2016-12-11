@@ -38,12 +38,21 @@ describe('User Module', () => {
         expect(action.payload.user.name).to.equal(mockedUser.name);
       });
     });
+
+    describe('Set Jwt', () => {
+      it('has the correct type and jwt information', () => {
+        const action: IUserAction = user.setJwt('randomtext');
+        expect(action.type).to.equal(user.SET_JWT);
+        expect(action.payload.jwt).to.equal('randomtext');
+      });
+    });
   });
 
   describe('Reducer', () => {
 
     let state: IUserState = {
       isAuthenticating: false,
+      jwt: null,
       loggedInUser: null,
     };
 
@@ -88,6 +97,21 @@ describe('User Module', () => {
           id: 'id',
           name: 'test',
         },
+      });
+    });
+
+    it('handles action of type SET_JWT', () => {
+      const action: IUserAction = {
+        type: user.SET_JWT,
+        payload: {
+          jwt: 'randomtext',
+        },
+      };
+
+      expect(user.reducer(state, action)).to.deep.equal({
+        isAuthenticating: false,
+        jwt: 'randomtext',
+        user: null,
       });
     });
 

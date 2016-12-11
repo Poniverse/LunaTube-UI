@@ -3,10 +3,12 @@ import { IUserState, IUserAction, IUser } from '../../../models/user';
 export const SET_USER = 'user/SET_USER';
 export const START_AUTH = 'user/START_AUTH';
 export const FINISH_AUTH = 'user/FINISH_AUTH';
+export const SET_JWT = 'user/SET_JWT';
 export const LOGOUT = 'user/LOGOUT';
 
 const initialState: IUserState = {
   isAuthenticating: false,
+  jwt: null,
   loggedInUser: null,
 };
 
@@ -31,6 +33,11 @@ export function reducer(state = initialState, action: IUserAction) {
       return {
         ...state,
         isAuthenticating: false,
+      };
+    case SET_JWT:
+      return {
+        ...state,
+        jwt: action.payload.jwt,
       };
     default:
       return state;
@@ -60,6 +67,15 @@ export function setUser(user: IUser): IUserAction {
     type: SET_USER,
     payload: {
       user,
+    },
+  };
+}
+
+export function setJwt(jwt: string): IUserAction {
+  return {
+    type: SET_JWT,
+    payload: {
+      jwt,
     },
   };
 }
