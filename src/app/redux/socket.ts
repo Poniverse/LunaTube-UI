@@ -1,4 +1,4 @@
-import { Socket as PheonixSocket } from 'phoenix';
+import { Socket as PheonixSocket, Channel } from 'phoenix';
 
 interface ISocketOptions {
   params?: {
@@ -6,10 +6,31 @@ interface ISocketOptions {
   };
 }
 
+interface IChannels {
+  room: Channel;
+}
+
 class Socket {
   protected socket: PheonixSocket;
+  protected channels: IChannels = {
+    room: null,
+  };
+  protected reconnectCallbacks = [];
 
-  public connect(jwt?: string) {
+  public connectToRoom(id, callback: Function) {
+    const reconnectCallback = () => {
+      const channel = this.socket.channel('room:' + id);
+      this.channels.room = channel;
+
+      callback(channel);
+    };
+
+    this.reconnectCallbacks.push(reconnectCallback);
+
+    reconnectCallback();
+  }
+
+  public connect(jwt?: string, reconnecting: boolean = false) {
     if (! process.env.BROWSER || this.socket) {
       return;
     }
@@ -27,13 +48,19 @@ class Socket {
       data
     );
     this.socket.connect();
+
+    if (reconnecting) {
+      this.reconnectCallbacks.forEach(callback => {
+        callback();
+      });
+    }
   }
 
   public reconnect(jwt?: string) {
     this.socket.disconnect();
     this.socket = null;
 
-    this.connect(jwt);
+    this.connect(jwt, true);
   }
 }
 

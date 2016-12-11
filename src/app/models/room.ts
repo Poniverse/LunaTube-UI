@@ -6,6 +6,7 @@ export { PlayerState };
 export interface IRoom {
   id: string;
   state: PlayerState;
+  remoteState: PlayerState;
   volume: number;
   syncTime: number;
   video: {
@@ -18,6 +19,7 @@ export interface IRoom {
 export interface IRoomAction {
   type: string;
   payload: {
+    id?: string,
     time?: number,
     volume?: number,
     state?: PlayerState,

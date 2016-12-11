@@ -1,13 +1,16 @@
-import { IRoom, IRoomAction, VideoSource } from '../../../models/room';
+import {IRoom, IRoomAction, VideoSource} from '../../../models/room';
+import Socket from '../../socket';
 
 export const SEEK_TIME = 'room/SEEK_TIME';
 export const SET_STATE = 'room/SET_STATE';
 export const SET_VOLUME = 'room/SET_VOLUME';
 export const SET_VIDEO = 'room/SET_VIDEO';
+export const INIT_ROOM = 'room/SET_ROOM';
 
 const initialState: IRoom = {
   id: null,
   state: 'loading',
+  remoteState: null,
   volume: 100,
   syncTime: null,
   video: null,
@@ -34,6 +37,14 @@ export function reducer (state = initialState, action: IRoomAction) {
       return {
         ...state,
         video: action.payload.video,
+      };
+    case INIT_ROOM:
+      return {
+        ...initialState,
+        id: action.payload.id,
+        remoteState: action.payload.state,
+        video: action.payload.video,
+        syncTime: action.payload.time,
       };
     default:
       return state;
@@ -86,5 +97,35 @@ export function seekTime(time: number): IRoomAction {
     payload: {
       time,
     },
+  };
+}
+
+export function joinRoom(id) {
+  return dispatch => {
+    Socket.connectToRoom(id, channel => {
+      // Init
+
+      channel.join()
+        .receive('ok', (response) => {
+          const action: IRoomAction = {
+            type: INIT_ROOM,
+            payload: {
+              id,
+              time: response.current_time,
+              state: response.state,
+              video: {
+                source: response.source,
+                url: response.url,
+                duration: response.duration,
+              },
+            },
+          };
+
+          dispatch(action);
+          console.log('==> Joined Room: ', response);
+        });
+
+        // TODO: Events from a leader in the channel.
+    });
   };
 }

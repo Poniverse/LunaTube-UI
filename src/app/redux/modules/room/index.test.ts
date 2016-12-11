@@ -51,6 +51,7 @@ describe('Room Module', () => {
     let state: IRoom = {
         id: 'random-id',
         state: 'loading',
+        remoteState: null,
         volume: 100,
         syncTime: null,
         video: null,
@@ -61,6 +62,7 @@ describe('Room Module', () => {
       expect(room.reducer(state, action)).to.be.eql({
         id: 'random-id',
         state: 'playing',
+        remoteState: null,
         volume: 100,
         syncTime: null,
         video: null,
@@ -72,6 +74,7 @@ describe('Room Module', () => {
       expect(room.reducer(state, action)).to.be.eql({
         id: 'random-id',
         state: 'loading',
+        remoteState: null,
         volume: 100,
         syncTime: 120,
         video: null,
@@ -83,6 +86,7 @@ describe('Room Module', () => {
       expect(room.reducer(state, action)).to.be.eql({
         id: 'random-id',
         state: 'loading',
+        remoteState: null,
         volume: 50,
         syncTime: null,
         video: null,
@@ -104,6 +108,7 @@ describe('Room Module', () => {
       expect(room.reducer(state, action)).to.deep.equal({
         id: 'random-id',
         state: 'loading',
+        remoteState: null,
         volume: 100,
         syncTime: null,
         video: {
@@ -118,6 +123,7 @@ describe('Room Module', () => {
       expect(room.reducer(state, { type: '', payload: {} })).to.be.eql({
         id: 'random-id',
         state: 'loading',
+        remoteState: null,
         volume: 100,
         syncTime: null,
         video: null,

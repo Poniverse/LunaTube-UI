@@ -67,7 +67,9 @@ class ControlBar extends React.Component<IProps, IState> {
     }
   }
 
-  protected setVolume(volume: number) {
+  protected setVolume() {
+    const { volume } = this.props;
+
     let setToVolume = 0;
 
     if (volume === 0) {

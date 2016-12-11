@@ -2,17 +2,20 @@ import * as React from 'react';
 import { IRoom, IRoomAction } from '../../models/room';
 import { bindActionCreators } from 'redux';
 const { connect } = require('react-redux');
-import { play, pause, seekTime, setVolume, setVideo }  from '../../redux/modules/room';
-// import { SOURCE_YOUTUBE }  from '../../models/player';
+import { play, pause, seekTime, setVolume, setVideo, joinRoom }  from '../../redux/modules/room';
 import { MediaPlayer } from '../../components';
 
 interface IProps {
+  params: {
+    id: string;
+  };
   room: IRoom;
   play: Redux.ActionCreator<IRoomAction>;
   pause: Redux.ActionCreator<IRoomAction>;
   seekTime: Redux.ActionCreator<IRoomAction>;
   setVolume: Redux.ActionCreator<IRoomAction>;
   setVideo: Redux.ActionCreator<IRoomAction>;
+  joinRoom: Redux.ActionCreator<any>;
 }
 
 @connect(
@@ -23,49 +26,27 @@ interface IProps {
     seekTime,
     setVolume,
     setVideo,
+    joinRoom,
   }, dispatch)
 )
-class Home extends React.Component<IProps, any> {
+class Room extends React.Component<IProps, any> {
   public componentWillMount() {
-    // const { setVideo } = this.props;
+    if (! process.env.BROWSER) {
+      return;
+    }
 
-    // Youtube:
-    //  - 0elg9WVytMs (Doin it Right - Sim Gretina)
-    //  - JHGkaShoyNs (Greg Young - CQRS and Event Sourcing - Code on the Beach 2014) (Hour long video)
-    // MP4:
-    //  - http://www.w3schools.com/html/mov_bbb.mp4 - 10 second video
-    //  - http://distribution.bbb3d.renderfarming.net/video/mp4/bbb_sunflower_1080p_60fps_normal.mp4
-    // MP3:
-    //  - https://pony.fm/t1183/dl.mp3
-    //  - http://192.99.131.205:8000/stream.mp3
+    const { joinRoom, room, params: { id } } = this.props;
+    // Load room info and connect to room channel
 
-    // setVideo(
-    //   SOURCE_YOUTUBE,
-    //   'Qi69aTLYF8E',
-    //   246
-    // );
-
-    // setVideo(
-    //   SOURCE_NATIVE_VIDEO,
-    //   'http://www.w3schools.com/html/mov_bbb.mp4',
-    //   10
-    // );
-
-    // setVideo(
-    //   SOURCE_NATIVE_AUDIO,
-    //   'https://pony.fm/t1183/dl.mp3',
-    //   226
-    // );
+    if (room.id !== id) {
+      joinRoom(id);
+    }
   }
 
   public render() {
-    const s = require('./style.css');
-
     return (
-      <div className={s.home + ' container'}>
-        <img src={require('./logo.svg')} />
-
-        {/*{this.renderPlayer()}*/}
+      <div className="container">
+        {this.renderPlayer()}
       </div>
     );
   }
@@ -97,9 +78,11 @@ class Home extends React.Component<IProps, any> {
   }
 
   public handleOnReady() {
-    // const { play } = this.props;
+    const { play, room } = this.props;
 
-    // play();
+    if (room.remoteState === 'playing') {
+      play();
+    }
   }
 
   public handleOnEnd() {
@@ -109,4 +92,4 @@ class Home extends React.Component<IProps, any> {
   }
 }
 
-export { Home }
+export { Room }
