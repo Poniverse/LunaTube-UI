@@ -25,6 +25,33 @@
   &.hide-bar {
     opacity: 0;
   }
+
+  & button,
+  & span {
+    display: inline-block;
+    padding: 11px 10px 9px;
+  }
+
+  & button {
+    background: none;
+    border: 0;
+    outline: none;
+  }
+
+  & button + & span {
+    margin-left: -10px;
+  }
+
+  & .play {
+    margin: 0 4px;
+    background: url('./play.svg') no-repeat center center;
+    background-size: 14px 16px;
+  }
+
+  & .volume-timestamp {
+    display: inline-block;
+    position: relative;
+  }
 }
 
 .left-controls {
@@ -46,36 +73,6 @@
   }
 }
 
-.volume-timestamp {
-  display: inline-block;
-  position: relative;
-}
-
-button, span {
-  display: inline-block;
-  padding: 11px 10px 9px;
-}
-
-button {
-  background: none;
-  border: 0;
-  outline: none;
-}
-
-button + span {
-  margin-left: -10px;
-}
-
-.volume > .fa {
-  min-width: 15px;
-}
-
-/* TODO: This should probably be a font somewhere */
-.play {
-  margin: 0 4px;
-  background: url('./play.svg') no-repeat center center;
-  background-size: 14px 16px;
-}
 
 .seekbar {
   border-radius: 5px;
