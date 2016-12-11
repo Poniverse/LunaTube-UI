@@ -60,6 +60,7 @@ describe('User Module', () => {
       const action: IUserAction = { type: user.START_AUTH };
       expect(user.reducer(state, action)).to.be.eql({
         isAuthenticating: true,
+        jwt: null,
         loggedInUser: null,
       });
     });
@@ -68,6 +69,7 @@ describe('User Module', () => {
       const action: IUserAction = { type: user.FINISH_AUTH };
       expect(user.reducer(state, action)).to.be.eql({
         isAuthenticating: false,
+        jwt: null,
         loggedInUser: null,
       });
     });
@@ -76,6 +78,7 @@ describe('User Module', () => {
       const action: IUserAction = { type: user.LOGOUT };
       expect(user.reducer(state, action)).to.be.eql({
         isAuthenticating: false,
+        jwt: null,
         loggedInUser: null,
       });
     });
@@ -93,6 +96,7 @@ describe('User Module', () => {
 
       expect(user.reducer(state, action)).to.deep.equal({
         isAuthenticating: false,
+        jwt: null,
         loggedInUser: {
           id: 'id',
           name: 'test',
@@ -111,7 +115,7 @@ describe('User Module', () => {
       expect(user.reducer(state, action)).to.deep.equal({
         isAuthenticating: false,
         jwt: 'randomtext',
-        user: null,
+        loggedInUser: null,
       });
     });
 
@@ -119,6 +123,7 @@ describe('User Module', () => {
       expect(user.reducer(state, { type: '', payload: {} })).to.be.eql({
         isAuthenticating: false,
         loggedInUser: null,
+        jwt: null,
       });
     });
 
