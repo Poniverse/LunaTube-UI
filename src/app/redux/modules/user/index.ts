@@ -10,7 +10,7 @@ const initialState: IUserState = {
   loggedInUser: null,
 };
 
-export function reducer (state = initialState, action: IUserAction) {
+export function reducer(state = initialState, action: IUserAction) {
   switch (action.type) {
     case SET_USER:
       return {

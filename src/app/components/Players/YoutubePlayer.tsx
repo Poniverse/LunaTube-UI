@@ -1,6 +1,5 @@
 import * as React from 'react';
 import Youtube from 'react-youtube';
-import * as ReactTimeout from 'react-timeout';
 import { AbstractPlayer } from './AbstractPlayer';
 
 class YoutubePlayer extends AbstractPlayer {
@@ -75,6 +74,4 @@ class YoutubePlayer extends AbstractPlayer {
   }
 }
 
-const Player = ReactTimeout(YoutubePlayer);
-
-export { Player as YoutubePlayer };
+export default YoutubePlayer;

@@ -1,9 +1,8 @@
 import * as React from 'react';
-import * as ReactTimeout from 'react-timeout';
-import { OriginalNativeVideoPlayer } from './NativeVideoPlayer';
+import NativeVideoPlayer from './NativeVideoPlayer';
 // import * as path from 'path';
 
-class NativeAudioPlayer extends OriginalNativeVideoPlayer {
+class NativeAudioPlayer extends NativeVideoPlayer {
   public render() {
     const { url } = this.props;
     // const extension = path.extname(url).substr(1);
@@ -18,6 +17,4 @@ class NativeAudioPlayer extends OriginalNativeVideoPlayer {
   }
 }
 
-const Player = ReactTimeout(NativeAudioPlayer);
-
-export { Player as NativeAudioPlayer };
+export default NativeAudioPlayer;

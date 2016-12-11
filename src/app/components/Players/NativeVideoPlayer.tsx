@@ -1,6 +1,5 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import * as ReactTimeout from 'react-timeout';
 import { AbstractPlayer } from './AbstractPlayer';
 import * as path from 'path';
 
@@ -73,6 +72,4 @@ class NativeVideoPlayer extends AbstractPlayer {
   }
 }
 
-const Player = ReactTimeout(NativeVideoPlayer);
-
-export { Player as NativeVideoPlayer, NativeVideoPlayer as OriginalNativeVideoPlayer };
+export default NativeVideoPlayer;

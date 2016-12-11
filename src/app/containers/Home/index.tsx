@@ -3,7 +3,7 @@ import { IRoom, IRoomAction } from '../../models/room';
 import { bindActionCreators } from 'redux';
 const { connect } = require('react-redux');
 import { play, pause, seekTime, setVolume, setVideo }  from '../../redux/modules/room';
-import {/*SOURCE_YOUTUBE, SOURCE_NATIVE_AUDIO,*/ SOURCE_NATIVE_VIDEO}  from '../../models/player';
+import { SOURCE_YOUTUBE }  from '../../models/player';
 import { MediaPlayer } from '../../components';
 
 interface IProps {
@@ -39,17 +39,17 @@ class Home extends React.Component<IProps, any> {
     //  - https://pony.fm/t1183/dl.mp3
     //  - http://192.99.131.205:8000/stream.mp3
 
-    // setVideo(
-    //   SOURCE_YOUTUBE,
-    //   'Qi69aTLYF8E',
-    //   226
-    // );
-
     setVideo(
-      SOURCE_NATIVE_VIDEO,
-      'http://www.w3schools.com/html/mov_bbb.mp4',
-      10
+      SOURCE_YOUTUBE,
+      'Qi69aTLYF8E',
+      226
     );
+
+    // setVideo(
+    //   SOURCE_NATIVE_VIDEO,
+    //   'http://www.w3schools.com/html/mov_bbb.mp4',
+    //   10
+    // );
 
     // setVideo(
     //   SOURCE_NATIVE_AUDIO,
@@ -97,7 +97,9 @@ class Home extends React.Component<IProps, any> {
   }
 
   public handleOnReady() {
-    console.log('Its ready');
+    const { play } = this.props;
+
+    play();
   }
 
   public handleOnEnd() {
