@@ -29,7 +29,7 @@
   & button,
   & span {
     display: inline-block;
-    padding: 11px 10px 9px;
+    padding: 11px 9px 9px;
   }
 
   & button {
@@ -52,6 +52,19 @@
     display: inline-block;
     position: relative;
   }
+
+  & .volume > .fa {
+    min-width: 15px;
+  }
+
+  & .timestamp {
+    transition: opacity 0.3s linear;
+    opacity: 1;
+
+    &.hide-timestamp {
+      opacity: 0;
+    }
+  }
 }
 
 .left-controls {
@@ -63,16 +76,6 @@
   float: right;
   width: 32px;
 }
-
-.timestamp {
-  transition: opacity 0.3s linear;
-  opacity: 1;
-
-  &.hide-timestamp {
-    opacity: 0;
-  }
-}
-
 
 .seekbar {
   border-radius: 5px;
