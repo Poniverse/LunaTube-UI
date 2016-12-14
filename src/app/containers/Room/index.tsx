@@ -72,7 +72,7 @@ class Room extends React.Component<IProps, any> {
         onVolumeChange={setVolume}
         onReady={this.handleOnReady.bind(this)}
         onEnd={this.handleOnEnd.bind(this)}
-        hideControls={false}
+        hideControls={true}
       />
     );
   }

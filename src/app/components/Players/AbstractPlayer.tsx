@@ -23,10 +23,6 @@ abstract class AbstractPlayer extends React.Component<IProps, any> {
   public componentDidUpdate(prevProps: IProps) {
     const {state, syncTime, volume} = this.props;
 
-    if (prevProps.syncTime !== syncTime) {
-      this.syncTime(syncTime);
-    }
-
     if (prevProps.volume !== volume) {
       this.setVolume(volume);
     }
@@ -39,6 +35,10 @@ abstract class AbstractPlayer extends React.Component<IProps, any> {
     if (state === STATE_PAUSED && prevProps.state === STATE_PLAYING) {
       this.endTimer();
       this.pauseVideo();
+    }
+
+    if (prevProps.syncTime !== syncTime || prevProps.state === STATE_LOADING) {
+      this.syncTime(syncTime);
     }
   }
 
