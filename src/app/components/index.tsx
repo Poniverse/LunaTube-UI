@@ -8,3 +8,4 @@ export {
   NativeAudioPlayer,
 } from './Players';
 export { MediaPlayer } from './MediaPlayer';
+export { Chat } from './Chat';

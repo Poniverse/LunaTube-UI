@@ -5,6 +5,7 @@ export const SEEK_TIME = 'room/SEEK_TIME';
 export const SET_STATE = 'room/SET_STATE';
 export const SET_VOLUME = 'room/SET_VOLUME';
 export const SET_VIDEO = 'room/SET_VIDEO';
+export const NEW_MESSAGE = 'room/NEW_MESSAGE';
 export const INIT_ROOM = 'room/SET_ROOM';
 
 const initialState: IRoom = {
@@ -14,6 +15,7 @@ const initialState: IRoom = {
   volume: 100,
   syncTime: null,
   video: null,
+  messages: [],
 };
 
 export function reducer (state = initialState, action: IRoomAction) {
@@ -37,6 +39,14 @@ export function reducer (state = initialState, action: IRoomAction) {
       return {
         ...state,
         video: action.payload.video,
+      };
+    case NEW_MESSAGE:
+      return {
+        ...state,
+        messages: [
+          ...state.messages,
+          action.payload.message,
+        ],
       };
     case INIT_ROOM:
       return {
@@ -100,10 +110,28 @@ export function seekTime(time: number): IRoomAction {
   };
 }
 
+export function sendMessage(message: string) {
+  return () => {
+    const channel = Socket.getRoomChannel();
+    channel.push('new_message', {body: message});
+  };
+}
+
 export function joinRoom(id) {
   return dispatch => {
     Socket.connectToRoom(id, channel => {
       // Init
+
+      channel.on('message', (response) => {
+        const action: IRoomAction = {
+          type: NEW_MESSAGE,
+          payload: {
+            message: response.body,
+          },
+        };
+
+        dispatch(action);
+      });
 
       channel.join()
         .receive('ok', (response) => {

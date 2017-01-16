@@ -55,6 +55,7 @@ describe('Room Module', () => {
         volume: 100,
         syncTime: null,
         video: null,
+        messages: [],
     };
 
     it('handles action of type SET_STATE', () => {
@@ -66,6 +67,7 @@ describe('Room Module', () => {
         volume: 100,
         syncTime: null,
         video: null,
+        messages: [],
       });
     });
 
@@ -78,6 +80,7 @@ describe('Room Module', () => {
         volume: 100,
         syncTime: 120,
         video: null,
+        messages: [],
       });
     });
 
@@ -90,6 +93,7 @@ describe('Room Module', () => {
         volume: 50,
         syncTime: null,
         video: null,
+        messages: [],
       });
     });
 
@@ -116,6 +120,20 @@ describe('Room Module', () => {
           url: '0elg9WVytMs',
           duration: 226,
         },
+        messages: [],
+      });
+    });
+
+    it('handles action of type NEW_MESSAGE', () => {
+      const action: IRoomAction = { type: room.NEW_MESSAGE, payload: { message: 'New Message' } };
+      expect(room.reducer(state, action)).to.be.eql({
+        id: 'random-id',
+        state: 'loading',
+        remoteState: null,
+        volume: 100,
+        syncTime: null,
+        video: null,
+        messages: ['New Message'],
       });
     });
 
@@ -127,6 +145,7 @@ describe('Room Module', () => {
         volume: 100,
         syncTime: null,
         video: null,
+        messages: [],
       });
     });
 

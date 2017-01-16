@@ -14,6 +14,7 @@ export interface IRoom {
     source: VideoSource;
     duration: number;
   };
+  messages: string[];
 }
 
 export interface IRoomAction {
@@ -28,5 +29,6 @@ export interface IRoomAction {
       url?: string,
       duration?: number,
     }
+    message?: string;
   };
 }

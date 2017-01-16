@@ -30,6 +30,10 @@ class Socket {
     reconnectCallback();
   }
 
+  public getRoomChannel() {
+    return this.channels.room;
+  }
+
   public connect(jwt?: string, reconnecting: boolean = false) {
     if (! process.env.BROWSER || this.socket) {
       return;

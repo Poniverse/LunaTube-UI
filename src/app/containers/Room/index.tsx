@@ -2,8 +2,8 @@ import * as React from 'react';
 import { IRoom, IRoomAction } from '../../models/room';
 import { bindActionCreators } from 'redux';
 const { connect } = require('react-redux');
-import { play, pause, seekTime, setVolume, setVideo, joinRoom }  from '../../redux/modules/room';
-import { MediaPlayer } from '../../components';
+import { play, pause, seekTime, setVolume, setVideo, sendMessage, joinRoom }  from '../../redux/modules/room';
+import { MediaPlayer, Chat } from '../../components';
 
 interface IProps {
   params: {
@@ -15,6 +15,7 @@ interface IProps {
   seekTime: Redux.ActionCreator<IRoomAction>;
   setVolume: Redux.ActionCreator<IRoomAction>;
   setVideo: Redux.ActionCreator<IRoomAction>;
+  sendMessage: Redux.ActionCreator<any>;
   joinRoom: Redux.ActionCreator<any>;
 }
 
@@ -26,6 +27,7 @@ interface IProps {
     seekTime,
     setVolume,
     setVideo,
+    sendMessage,
     joinRoom,
   }, dispatch)
 )
@@ -47,6 +49,7 @@ class Room extends React.Component<IProps, any> {
     return (
       <div className="container">
         {this.renderPlayer()}
+        {this.renderChat()}
       </div>
     );
   }
@@ -73,6 +76,17 @@ class Room extends React.Component<IProps, any> {
         onReady={this.handleOnReady.bind(this)}
         onEnd={this.handleOnEnd.bind(this)}
         hideControls={true}
+      />
+    );
+  }
+
+  protected renderChat() {
+    const { room: { messages }, sendMessage} = this.props;
+
+    return (
+      <Chat
+        messages={messages}
+        onSendMessage={sendMessage}
       />
     );
   }
